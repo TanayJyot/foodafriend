@@ -16,32 +16,6 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
   final Completer<GoogleMapController> _controller = Completer();
   bool follow = true;
 
-  BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor currentLocationIcon = BitmapDescriptor.defaultMarker;
-  void setCustomMarkerIcon() {
-    BitmapDescriptor.asset(ImageConfiguration.empty, "assets/location pin.png")
-        .then(
-      (icon) {
-        setState(() {
-          sourceIcon = icon;
-        });
-      },
-    );
-    BitmapDescriptor.asset(ImageConfiguration.empty, "assets/location pin.png")
-        .then(
-      (icon) {
-        destinationIcon = icon;
-      },
-    );
-    BitmapDescriptor.asset(ImageConfiguration.empty, "assets/location pin.png")
-        .then(
-      (icon) {
-        currentLocationIcon = icon;
-      },
-    );
-  }
-
   LocationData? currentLocation;
   void getCurrentLocation() async {
     Location location = Location();
@@ -143,8 +117,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
   void initState() {
     // TODO: implement initState
     getPolyPoints();
-    setCustomMarkerIcon();
-    // getCurrentLocation();
+    getCurrentLocation();
     super.initState();
   }
 
@@ -182,7 +155,6 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                           onTap: () => setState(() {
                             follow = true;
                           }),
-                          icon: currentLocationIcon,
                         ),
                         Marker(
                           markerId: MarkerId("source"),
@@ -191,7 +163,6 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                             title: "Restaurant",
                             snippet: "Your food is picked up from here",
                           ),
-                          icon: sourceIcon,
                         ),
                         Marker(
                           markerId: MarkerId("destination"),
@@ -200,7 +171,6 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                             title: "Destination",
                             snippet: "Your food will be delivered here",
                           ),
-                          icon: destinationIcon,
                         ),
                       },
                       onMapCreated: (mapController) {

@@ -28,7 +28,6 @@
 	<string>The app needs the location</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The app needs the location</string>
-	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
