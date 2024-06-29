@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "86043200660",
+    "project_id": "buildspace-s5",
+    "storage_bucket": "buildspace-s5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86043200660:android:e08c7990a8988f7a0a3881",
+        "android_client_info": {
+          "package_name": "com.tanayjyot.buildspace_s5"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc4VwHI_KdxHzENMfVFsITW2x-8n6Y40Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
