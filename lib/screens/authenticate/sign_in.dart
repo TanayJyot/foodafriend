@@ -12,10 +12,14 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
 
+  final _formKey = GlobalKey<FormState>();
+
   final AuthService _auth = AuthService();
   // text field state
   String email = '';
   String password = '';
+  String error = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -46,16 +50,19 @@ class _SignInState extends State<SignIn> {
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
+          key: _formKey,
           child: Column(
             children: <Widget>[
               SizedBox(height: 20),
-              TextField(
+              TextFormField(
+                validator: (val) => val!.isEmpty ? "Enter an email" : null,
                 onChanged: (val){
                   setState(() => email = val);
                 },
               ),
-              SizedBox(height: 20),
-              TextField(
+              const SizedBox(height: 20),
+              TextFormField(
+                validator: (val) => val!.length < 6 ? "Enter a password 6+ chars long" : null,
                 obscureText: true,
                 onChanged:(val){
                   setState(() => password = val);
@@ -67,13 +74,23 @@ class _SignInState extends State<SignIn> {
                   backgroundColor: Colors.pink[400]
                 ),
                   onPressed: () async {
-                  print(email);
-                  print(password);
+                    if (_formKey.currentState!.validate()) {
+                      print('valid');
+                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                      if (result == null){
+                        setState(() => error = 'Could not sign in with those credentials');//TODO There is a way to get the error directly from firebase_auth here
+                      }
+                    }
                   },
                   child: const Text(
                     'Sign In',
                     style: TextStyle(color: Colors.white),
                   )
+              ),
+              const SizedBox(height: 12.0),
+              Text(
+                error,
+                style: const TextStyle(color: Colors.red, fontSize: 14.0),
               ),
 
             ],
@@ -83,6 +100,8 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
+// TODO I/flutter ( 7359): [firebase_auth/invalid-email] The email address is badly formatted.
+// TODO THis is what firebase_auth is giving so find a way to access it directly
 
 
 // TODO Create an anonymous sign in in the future
