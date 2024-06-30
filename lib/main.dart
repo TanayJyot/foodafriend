@@ -1,7 +1,7 @@
 import 'package:buildspace_s5/screens/order_tracking.dart';
 import 'package:buildspace_s5/models/user.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
-import 'package:buildspace_s5/services.dart';
+import 'package:buildspace_s5/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
