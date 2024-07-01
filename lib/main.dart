@@ -8,13 +8,29 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'package:buildspace_s5/themes/theme_provider.dart';
+import 'package:buildspace_s5/models/restaurant.dart';
+import 'package:buildspace_s5/pages/home_page.dart';
+
 
 Future<void> main() async{
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    runApp(const MyApp());
+    // runApp(const MyApp());
+    runApp(
+      MultiProvider(
+        providers: [
+          // theme provider
+          ChangeNotifierProvider(create: (context) => ThemeProvider()),
+
+          // restaurant provider
+          ChangeNotifierProvider(create: (context) => Restaurant()),
+        ],
+        child: const MyApp(),
+      ),
+    );
   }
 
 
@@ -55,9 +71,18 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       catchError: (_, __) => null,
-      child: const MaterialApp(
+      child: MaterialApp(
+        // Hasnain
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
-        home: Wrapper(),
+
+        // Tanay
+        // home: Wrapper(),
+
+        //Akshatt
+
+        debugShowCheckedModeBanner: false,
+        home: const HomePage(),
+        theme: Provider.of<ThemeProvider>(context).themeData,
       ),
     );
   }
