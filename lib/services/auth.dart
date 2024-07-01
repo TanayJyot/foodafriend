@@ -1,5 +1,6 @@
 
 import 'package:buildspace_s5/models/user.dart';
+import 'package:buildspace_s5/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -48,6 +49,21 @@ class AuthService {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
+
+      String name = 'new member 001';
+      bool isDeliverer = true;
+      String details = 'Hi I am a computer science student at the university of toronto';
+      String affiliation = 'University of Toronto'; // TODO Make an enum for this to handle university choices\
+      String homeAddress = '55 Centre Avenue'; //TODO Somehow link this to google maps and retrieve postal code
+      String workAddress = "King's college Circle";
+
+
+
+
+
+      // create a new document with the user
+      await DatabaseService(uid: user!.uid).updateUserData(name, isDeliverer, details, affiliation, homeAddress, workAddress);
+
       return _userFromCredUser(user);
     } catch (e){
       print(e.toString());

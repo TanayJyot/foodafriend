@@ -76,13 +76,13 @@ class MyApp extends StatelessWidget {
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 
         // Tanay
-        // home: Wrapper(),
+        home: Wrapper(),
 
         //Akshatt
 
-        debugShowCheckedModeBanner: false,
-        home: const HomePage(),
-        theme: Provider.of<ThemeProvider>(context).themeData,
+        // debugShowCheckedModeBanner: false,
+        // home: const HomePage(),
+        // theme: Provider.of<ThemeProvider>(context).themeData,
       ),
     );
   }

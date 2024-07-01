@@ -30,7 +30,8 @@ class SettingsPage extends StatelessWidget {
                   "Dark Mode",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.inversePrimary),
+                      color: Theme.of(context).colorScheme.inversePrimary
+                  ),
                 ),
 
                 //switch
