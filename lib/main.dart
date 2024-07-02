@@ -1,3 +1,4 @@
+import 'package:buildspace_s5/screens/heropage/heropage.dart';
 import 'package:buildspace_s5/screens/order_tracking.dart';
 import 'package:buildspace_s5/models/user.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
@@ -38,9 +39,6 @@ Future<void> main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
-  static const LatLng destination = LatLng(37.33429383, -122.06600055);
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -73,10 +71,11 @@ class MyApp extends StatelessWidget {
       catchError: (_, __) => null,
       child: MaterialApp(
         // Hasnain
-        // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
+        home: Heropage(),
+        theme: Provider.of<ThemeProvider>(context).themeData,
 
         // Tanay
-        home: Wrapper(),
+        // home: Wrapper(),
 
         //Akshatt
 
