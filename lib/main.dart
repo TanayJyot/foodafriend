@@ -1,3 +1,5 @@
+import 'package:buildspace_s5/screens/authenticate/authenticate_restaurant.dart';
+import 'package:buildspace_s5/screens/authenticate/register_restaurant.dart';
 import 'package:buildspace_s5/screens/order_tracking.dart';
 import 'package:buildspace_s5/models/user.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
@@ -77,6 +79,9 @@ class MyApp extends StatelessWidget {
 
         // Tanay
         home: Wrapper(),
+          // Restaurant
+        // home: AuthenticateRestaurant(),
+
 
         //Akshatt
 

@@ -1,3 +1,4 @@
+import 'package:buildspace_s5/enums/user_type_enum.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -9,19 +10,19 @@ class DatabaseService {
 
   Future updateUserData(
       String name,
-      bool isDeliverer,
+      String email,
+      String category,
       String details,
       String affiliation,
-      String homeAddress,
-      String workAddress
       ) async {
     return await userCollection.doc(uid).set({
       'name': name,
-      'isDeliverer': isDeliverer,
+      'email': email,
+      'category': category,
       'details': details,
       'affiliation': affiliation,
-      'homeAddress': homeAddress,
-      'workAddress': workAddress, // need these to track commute in the future
+      // TODO Link this to the address model
+      // need these to track commute in the future
     });
   }
 
@@ -30,3 +31,4 @@ class DatabaseService {
     return userCollection.snapshots();
 }
 }
+
