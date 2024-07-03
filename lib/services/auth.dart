@@ -3,7 +3,6 @@ import 'package:buildspace_s5/models/user.dart';
 import 'package:buildspace_s5/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../enums/user_type_enum.dart';
 
 class AuthService {
 

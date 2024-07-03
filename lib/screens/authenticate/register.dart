@@ -2,7 +2,6 @@ import 'package:buildspace_s5/shared/constants.dart';
 import 'package:buildspace_s5/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-import '../../enums/user_type_enum.dart';
 import '../../services/auth.dart';
 
 class Register extends StatefulWidget {
@@ -31,7 +30,7 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    return loading ? Loading() : Scaffold(
+    return loading ? const Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
@@ -129,7 +128,7 @@ class _RegisterState extends State<Register> {
                   const SizedBox(height: 12.0),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
                   ),
 
 
@@ -137,7 +136,7 @@ class _RegisterState extends State<Register> {
               )
           )
       ),
-    );;
+    );
   }
 }
 

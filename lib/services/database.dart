@@ -1,4 +1,3 @@
-import 'package:buildspace_s5/enums/user_type_enum.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -7,6 +6,7 @@ class DatabaseService {
   DatabaseService({ required this.uid });
   // collection reference
   final CollectionReference userCollection = FirebaseFirestore.instance.collection('Users');
+  final CollectionReference restaurantCollection = FirebaseFirestore.instance.collection('Restaurants');
 
   Future updateUserData(
       String name,
@@ -26,9 +26,35 @@ class DatabaseService {
     });
   }
 
+  Future updateRestaurantData(
+      String name,
+      String address,
+      String phone,
+      String hours, // TODO Find a way to set this up properly
+      String description,
+      double price
+      ) async {
+    await restaurantCollection.doc(uid).set({
+      'name': name,
+      'address': address,
+      'phone': phone,
+      'hours': hours,
+    });
+    await restaurantCollection.doc(uid).collection('items').doc().set({
+      'name': name,
+      'description': description,
+      'price': price
+    });
+  }
+
+
+
   // User Stream
   Stream<QuerySnapshot> get users {
     return userCollection.snapshots();
 }
+  Stream<QuerySnapshot> get restaurants {
+    return restaurantCollection.snapshots();
+  }
 }
 

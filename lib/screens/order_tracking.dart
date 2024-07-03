@@ -20,22 +20,22 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
   void getCurrentLocation() async {
     Location location = Location();
 
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
         print("Location service not enabled");
         return;
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         print("location permission not granted");
         return;
       }
@@ -84,11 +84,11 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
         request: polylineRequest,
         googleApiKey: "AIzaSyDPU0Taag1cKPTbtV0awCqPjIYcwsOPx7Y");
     if (result.points.isNotEmpty) {
-      result.points.forEach(
-        (PointLatLng point) => polylineCoordinates.add(
+      for (var point in result.points) {
+        polylineCoordinates.add(
           LatLng(point.latitude, point.longitude),
-        ),
-      );
+        );
+      }
       setState(() {});
     }
   }
@@ -157,7 +157,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                           }),
                         ),
                         Marker(
-                          markerId: MarkerId("source"),
+                          markerId: const MarkerId("source"),
                           position: widget.sourceLocation,
                           infoWindow: const InfoWindow(
                             title: "Restaurant",
@@ -165,7 +165,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                           ),
                         ),
                         Marker(
-                          markerId: MarkerId("destination"),
+                          markerId: const MarkerId("destination"),
                           position: widget.destination,
                           infoWindow: const InfoWindow(
                             title: "Destination",

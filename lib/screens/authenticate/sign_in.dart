@@ -26,12 +26,12 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return loading? Loading() : Scaffold(
+    return loading? const Loading() : Scaffold(
       backgroundColor: Colors.brown[100],
       appBar: AppBar(
         backgroundColor: Colors.brown[400],
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           'Sign in to Food a Friend',
         style: TextStyle(color: Colors.white),
         ),
@@ -40,9 +40,9 @@ class _SignInState extends State<SignIn> {
               onPressed: () {
                 widget.toggleView();
               },
-              icon: Icon(Icons.person,
+              icon: const Icon(Icons.person,
               color: Colors.white,),
-            label: Text('Register',
+            label: const Text('Register',
             style: TextStyle(
               color: Colors.white
             ),),
@@ -56,7 +56,7 @@ class _SignInState extends State<SignIn> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'Email'),
                 validator: (val) => val!.isEmpty ? "Enter an email" : null,
@@ -73,7 +73,7 @@ class _SignInState extends State<SignIn> {
                   setState(() => password = val);
                 } ,
               ),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.pink[400]

@@ -1,6 +1,3 @@
-import 'package:buildspace_s5/screens/authenticate/authenticate_restaurant.dart';
-import 'package:buildspace_s5/screens/authenticate/register_restaurant.dart';
-import 'package:buildspace_s5/screens/order_tracking.dart';
 import 'package:buildspace_s5/models/user.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
@@ -8,11 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
-import 'package:buildspace_s5/pages/home_page.dart';
 
 
 Future<void> main() async{
@@ -73,7 +68,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       catchError: (_, __) => null,
-      child: MaterialApp(
+      child: const MaterialApp(
         // Hasnain
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 

@@ -14,7 +14,7 @@ class Wrapper extends StatelessWidget {
 
     // check if there is some user logged in
     if (user == null){
-      return Authenticate();
+      return const Authenticate();
     } else {
       return Heropage();
     }
