@@ -73,6 +73,31 @@ class AuthService {
     }
   }
 
+  Future registerRestaurantWithEmailAndPassword(String email, String password, String name, String details, String category, String affiliation) async {
+    try{
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = result.user;
+
+      // String name = 'new member 001';
+      // String details = 'Hi I am a computer science student at the university of toronto';
+      // String affiliation = 'University of Toronto'; // TODO Make an enum for this to handle university choices\
+      // // String homeAddress = '55 Centre Avenue'; //TODO Somehow link this to google maps and retrieve postal code
+      // // String workAddress = "King's college Circle";
+
+
+
+
+
+      // create a new document with the user
+      await DatabaseService(uid: user!.uid).updateRestaurantData(name, address, phone, hours);
+
+      return _userFromCredUser(user);
+    } catch (e){
+      print(e.toString());
+      return null;
+    }
+  }
+
 // sign out
 Future signOut() async{
     try{

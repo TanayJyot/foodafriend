@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
+import 'package:buildspace_s5/screens/authenticate/authenticate_restaurant.dart';
+
 
 
 Future<void> main() async{
@@ -68,14 +70,14 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       catchError: (_, __) => null,
-      child: const MaterialApp(
+      child: MaterialApp(
         // Hasnain
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 
         // Tanay
-        home: Wrapper(),
+        // home: Wrapper(),
           // Restaurant
-        // home: AuthenticateRestaurant(),
+        home: AuthenticateRestaurant(),
 
 
         //Akshatt

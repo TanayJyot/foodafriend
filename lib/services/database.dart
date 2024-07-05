@@ -31,19 +31,12 @@ class DatabaseService {
       String address,
       String phone,
       String hours, // TODO Find a way to set this up properly
-      String description,
-      double price
       ) async {
     await restaurantCollection.doc(uid).set({
       'name': name,
       'address': address,
       'phone': phone,
       'hours': hours,
-    });
-    await restaurantCollection.doc(uid).collection('items').doc().set({
-      'name': name,
-      'description': description,
-      'price': price
     });
   }
 
