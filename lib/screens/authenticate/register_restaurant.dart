@@ -22,6 +22,10 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
   // text field state
   String email = '';
   String password = '';
+  String name = '';
+  String address = '';
+  String phone = ''; // TODO Change this to integers
+  String hours = '';
   String error = '';
 
   @override
@@ -40,9 +44,9 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
             onPressed: () {
               widget.toggleView();
             },
-            icon: Icon(Icons.person,
+            icon: const Icon(Icons.person,
               color: Colors.white,),
-            label: Text(
+            label: const Text(
               'Register',
               style: TextStyle(
                   color: Colors.white
@@ -74,6 +78,39 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                       setState(() => password = val);
                     } ,
                   ),
+
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Name'),
+                    validator: (val) => val!.isEmpty ? "Enter a name" : null,
+                    onChanged: (val){
+                      setState(() => email = val);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Address'),
+                    validator: (val) => val!.isEmpty ? "Enter an Address" : null,
+                    onChanged: (val){
+                      setState(() => email = val);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Phone'),
+                    validator: (val) => val!.isEmpty ? "Enter a phone number" : null,
+                    onChanged: (val){
+                      setState(() => email = val);
+                    },
+                  ), const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: textInputDecoration.copyWith(hintText: 'Hours'),
+                    validator: (val) => val!.isEmpty ? "Enter your hours of operation" : null,
+                    onChanged: (val){
+                      setState(() => email = val);
+                    },
+                  ),
+
                   const SizedBox(height: 20.0),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -84,7 +121,7 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                           setState(() {
                             loading = true;
                           });
-                          dynamic result = await _auth.(email, password);
+                          dynamic result = await _auth.registerRestaurantWithEmailAndPassword(email, password, name, address, phone, hours);
                           if (result == null){
                             setState(() {
                               error = 'Please supply a valid email';
@@ -101,7 +138,7 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                   const SizedBox(height: 12.0),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    style: const TextStyle(color: Colors.red, fontSize: 14.0),
                   ),
 
 
@@ -109,6 +146,6 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
               )
           )
       ),
-    );;
+    );
   }
 }

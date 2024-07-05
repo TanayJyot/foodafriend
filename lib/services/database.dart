@@ -40,8 +40,6 @@ class DatabaseService {
     });
   }
 
-
-
   // User Stream
   Stream<QuerySnapshot> get users {
     return userCollection.snapshots();

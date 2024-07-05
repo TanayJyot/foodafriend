@@ -1,4 +1,5 @@
 import 'package:buildspace_s5/models/user.dart';
+import 'package:buildspace_s5/screens/restaurant_wrapper.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
 import 'package:buildspace_s5/screens/authenticate/authenticate_restaurant.dart';
+
 
 
 
@@ -77,7 +79,7 @@ class MyApp extends StatelessWidget {
         // Tanay
         // home: Wrapper(),
           // Restaurant
-        home: AuthenticateRestaurant(),
+        home: RestaurantWrapper(),
 
 
         //Akshatt

@@ -73,7 +73,7 @@ class AuthService {
     }
   }
 
-  Future registerRestaurantWithEmailAndPassword(String email, String password, String name, String details, String category, String affiliation) async {
+  Future registerRestaurantWithEmailAndPassword(String email, String password, String name, String address, String phone, String hours) async {
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
       User? user = result.user;
