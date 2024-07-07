@@ -1,5 +1,4 @@
 import 'package:buildspace_s5/models/user.dart';
-import 'package:buildspace_s5/screens/restaurant_wrapper.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
-import 'package:buildspace_s5/screens/authenticate/authenticate_restaurant.dart';
 
 
 
@@ -72,14 +70,14 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       catchError: (_, __) => null,
-      child: MaterialApp(
+      child: const MaterialApp(
         // Hasnain
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 
         // Tanay
-        // home: Wrapper(),
+        home: Wrapper(),
           // Restaurant
-        home: RestaurantWrapper(),
+        // home: RestaurantWrapper(),
 
 
         //Akshatt

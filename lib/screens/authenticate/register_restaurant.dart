@@ -1,8 +1,10 @@
+
+
 import 'package:buildspace_s5/shared/constants.dart';
 import 'package:buildspace_s5/shared/loading.dart';
 import 'package:flutter/material.dart';
-
 import '../../services/auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class RegisterRestaurant extends StatefulWidget {
 
@@ -18,6 +20,8 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
   bool loading = false;
+  final storage = FirebaseStorage.instance;
+  final storageRef = FirebaseStorage.instance.ref();
 
   // text field state
   String email = '';
@@ -65,48 +69,62 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) => val!.isEmpty ? "Enter an email" : null,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() => email = val);
                     },
                   ),
                   const SizedBox(height: 15),
                   TextFormField(
-                    decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                    validator: (val) => val!.length < 6 ? "Enter a password 6+ chars long" : null,
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Password'),
+                    validator: (val) =>
+                    val!.length < 6
+                        ? "Enter a password 6+ chars long"
+                        : null,
                     obscureText: true,
-                    onChanged:(val){
+                    onChanged: (val) {
                       setState(() => password = val);
-                    } ,
+                    },
                   ),
 
                   const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Name'),
                     validator: (val) => val!.isEmpty ? "Enter a name" : null,
-                    onChanged: (val){
+                    onChanged: (val) {
                       setState(() => name = val);
                     },
                   ),
                   const SizedBox(height: 15),
                   TextFormField(
-                    decoration: textInputDecoration.copyWith(hintText: 'Address'),
-                    validator: (val) => val!.isEmpty ? "Enter an Address" : null,
-                    onChanged: (val){
+                    decoration: textInputDecoration.copyWith(
+                        hintText: 'Address'),
+                    validator: (val) =>
+                    val!.isEmpty
+                        ? "Enter an Address"
+                        : null,
+                    onChanged: (val) {
                       setState(() => address = val);
                     },
                   ),
                   const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Phone'),
-                    validator: (val) => val!.isEmpty ? "Enter a phone number" : null,
-                    onChanged: (val){
+                    validator: (val) =>
+                    val!.isEmpty
+                        ? "Enter a phone number"
+                        : null,
+                    onChanged: (val) {
                       setState(() => phone = val);
                     },
                   ), const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Hours'),
-                    validator: (val) => val!.isEmpty ? "Enter your hours of operation" : null,
-                    onChanged: (val){
+                    validator: (val) =>
+                    val!.isEmpty
+                        ? "Enter your hours of operation"
+                        : null,
+                    onChanged: (val) {
                       setState(() => hours = val);
                     },
                   ),
@@ -122,8 +140,10 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                             loading = true;
                           });
                           print(email);
-                          dynamic result = await _auth.registerRestaurantWithEmailAndPassword(email, password, name, address, phone, hours);
-                          if (result == null){
+                          dynamic result = await _auth
+                              .registerRestaurantWithEmailAndPassword(
+                              email, password, name, address, phone, hours);
+                          if (result == null) {
                             setState(() {
                               error = 'Please supply a valid email';
                               loading = false;
@@ -142,11 +162,11 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                     style: const TextStyle(color: Colors.red, fontSize: 14.0),
                   ),
 
-
                 ],
               )
           )
       ),
     );
   }
+
 }
