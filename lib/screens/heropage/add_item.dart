@@ -8,7 +8,7 @@ class AddItem extends StatefulWidget {
   final String restaurantId;
 
 
-  AddItem({super.key, required this.restaurantId});
+  const AddItem({super.key, required this.restaurantId});
 
   @override
   State<AddItem> createState() => _AddItemState();
@@ -63,14 +63,14 @@ class _AddItemState extends State<AddItem> {
     ],
     ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(controller: _itemNameController, decoration: InputDecoration(labelText: 'Item Name')),
-            TextField(controller: _itemDescriptionController, decoration: InputDecoration(labelText: 'Item Description')),
-            TextField(controller: _itemPriceController, decoration: InputDecoration(labelText: 'Item Price')),
-            SizedBox(height: 20),
-            ElevatedButton(onPressed: _addItem, child: Text('Add Item')),
+            TextField(controller: _itemNameController, decoration: const InputDecoration(labelText: 'Item Name')),
+            TextField(controller: _itemDescriptionController, decoration: const InputDecoration(labelText: 'Item Description')),
+            TextField(controller: _itemPriceController, decoration: const InputDecoration(labelText: 'Item Price')),
+            const SizedBox(height: 20),
+            ElevatedButton(onPressed: _addItem, child: const Text('Add Item')),
           ],
         ),
       ),

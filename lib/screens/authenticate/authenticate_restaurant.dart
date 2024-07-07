@@ -3,6 +3,8 @@ import 'package:buildspace_s5/screens/authenticate/sign_in_restaurant.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticateRestaurant extends StatefulWidget {
+  const AuthenticateRestaurant({super.key});
+
   @override
   _AuthenticateRestaurantState createState() => _AuthenticateRestaurantState();
 }

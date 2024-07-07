@@ -7,7 +7,6 @@ import '../../services/auth.dart';
 
 class Register extends StatefulWidget {
   final toggleView;
-
   const Register({super.key, required this.toggleView});
 
   @override
@@ -33,159 +32,172 @@ class _RegisterState extends State<Register> {
     return loading
         ? const Loading()
         : Scaffold(
-            backgroundColor: Colors.brown[100],
-            appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: const Text(
-                'Sign up to Food a Friend',
-                style: TextStyle(color: Colors.white),
-              ),
-              actions: <Widget>[
-                TextButton.icon(
-                  onPressed: () {
-                    widget.toggleView();
-                  },
-                  icon: const Icon(
-                    Icons.person,
-                    color: Colors.white,
-                  ),
-                  label: const Text(
-                    'Register',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )
-              ],
+      backgroundColor: Colors.brown[100],
+      appBar: AppBar(
+        backgroundColor: Colors.brown[400],
+        elevation: 0.0,
+        title: const Text(
+          'Sign up to Food a Friend',
+          style: TextStyle(color: Colors.white),
+        ),
+        actions: <Widget>[
+          TextButton.icon(
+            onPressed: () {
+              widget.toggleView();
+            },
+            icon: const Icon(
+              Icons.person,
+              color: Colors.white,
             ),
-            body: Container(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 20.0, horizontal: 50.0),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: <Widget>[
-                        Stack(children: [
-                          CircleAvatar(
-                              radius: 100,
-                              child: imageUrl == null
-                                  ? const Icon(
-                                      Icons.person,
-                                      size: 200,
-                                      color: Colors.grey,
-                                    )
-                                  : SizedBox(
-                                      height: 200,
-                                      child: ClipOval(
-                                          child: Image.network(
-                                        imageUrl!,
-                                        fit: BoxFit.cover,
-                                      )),
-                                    )),
-                          Positioned(
-                              right: 20,
-                              top: 10,
-                              child: GestureDetector(
-                                onTap: () {
-                                  try {
-                                    pickImage(context);
-                                  } catch (e) {}
-                                },
-                                child: const Icon(
-                                  Icons.camera_alt,
-                                  color: Colors.white,
-                                  size: 35,
-                                ),
-                              ))
-                        ]),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration:
-                              textInputDecoration.copyWith(hintText: 'Name'),
-                          validator: (val) =>
-                              val!.isEmpty ? "Enter your name" : null,
-                          onChanged: (val) {
-                            setState(() => name = val);
-                          },
+            label: const Text(
+              'Register',
+              style: TextStyle(color: Colors.white),
+            ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              vertical: 20.0, horizontal: 50.0),
+          child: Column(
+            children: <Widget>[
+              Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 100,
+                    child: imageUrl == null
+                        ? const Icon(
+                      Icons.person,
+                      size: 200,
+                      color: Colors.grey,
+                    )
+                        : SizedBox(
+                      height: 200,
+                      child: ClipOval(
+                        child: Image.network(
+                          imageUrl!,
+                          fit: BoxFit.cover,
                         ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration:
-                              textInputDecoration.copyWith(hintText: 'Email'),
-                          validator: (val) =>
-                              val!.isEmpty ? "Enter your email" : null,
-                          onChanged: (val) {
-                            setState(() => email = val);
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: 'Password'),
-                          validator: (val) => val!.length < 6
-                              ? "Enter a password 6+ chars long"
-                              : null,
-                          obscureText: true,
-                          onChanged: (val) {
-                            setState(() => password = val);
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: 'Tell us more about you!'),
-                          // validator: (val) => val!.isEmpty ? "Enter your email" : null,
-                          onChanged: (val) {
-                            setState(() => details = val);
-                          },
-                        ),
-                        const SizedBox(height: 20),
-                        TextFormField(
-                          decoration: textInputDecoration.copyWith(
-                              hintText: 'Where do you study?'),
-                          // validator: (val) => val!.isEmpty ? "Enter your email" : null,
-                          onChanged: (val) {
-                            setState(() => affiliation = val);
-                          },
-                        ),
-                        const SizedBox(height: 20.0),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.pink[400]),
-                            onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                setState(() {
-                                  loading = true;
-                                });
-                                dynamic result =
-                                    await _auth.registerWithEmailAndPassword(
-                                        email,
-                                        password,
-                                        name,
-                                        details,
-                                        category,
-                                        affiliation);
-                                if (result == null) {
-                                  setState(() {
-                                    error = 'Please supply a valid email';
-                                    loading = false;
-                                  });
-                                }
-                              }
-                            },
-                            child: const Text(
-                              'Register',
-                              style: TextStyle(color: Colors.white),
-                            )),
-                        const SizedBox(height: 12.0),
-                        Text(
-                          error,
-                          style: const TextStyle(
-                              color: Colors.red, fontSize: 14.0),
-                        ),
-                      ],
-                    ))),
-          );
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 20,
+                    top: 10,
+                    child: GestureDetector(
+                      onTap: () {
+                        try {
+                          pickImage(context);
+                        } catch (e) {}
+                      },
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                        size: 35,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration:
+                      textInputDecoration.copyWith(hintText: 'Name'),
+                      validator: (val) =>
+                      val!.isEmpty ? "Enter your name" : null,
+                      onChanged: (val) {
+                        setState(() => name = val);
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration:
+                      textInputDecoration.copyWith(hintText: 'Email'),
+                      validator: (val) =>
+                      val!.isEmpty ? "Enter your email" : null,
+                      onChanged: (val) {
+                        setState(() => email = val);
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Password'),
+                      validator: (val) => val!.length < 6
+                          ? "Enter a password 6+ chars long"
+                          : null,
+                      obscureText: true,
+                      onChanged: (val) {
+                        setState(() => password = val);
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Tell us more about you!'),
+                      onChanged: (val) {
+                        setState(() => details = val);
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Where do you study?'),
+                      onChanged: (val) {
+                        setState(() => affiliation = val);
+                      },
+                    ),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.pink[400]),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            loading = true;
+                          });
+                          dynamic result = await _auth
+                              .registerWithEmailAndPassword(
+                              email,
+                              password,
+                              name,
+                              details,
+                              category,
+                              affiliation);
+                          if (result == null) {
+                            setState(() {
+                              error = 'Please supply a valid email';
+                              loading = false;
+                            });
+                          }
+                        }
+                      },
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(height: 12.0),
+                    Text(
+                      error,
+                      style: const TextStyle(
+                          color: Colors.red, fontSize: 14.0),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
 // TODO Add the roles that the user would want to play using UserType
+
