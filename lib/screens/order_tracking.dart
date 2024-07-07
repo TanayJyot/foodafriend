@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,6 +17,7 @@ class OrderTrackingPage extends StatefulWidget {
 class OrderTrackingPageState extends State<OrderTrackingPage> {
   final Completer<GoogleMapController> _controller = Completer();
   bool follow = true;
+  String userType = "delivery";
 
   LocationData? currentLocation;
   void getCurrentLocation() async {
@@ -94,6 +97,14 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
   }
 
   void _goToDelivery() async {
+    if (userType == "delivery") {
+      const snackBar = SnackBar(
+        content: Text('Notified User'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      return;
+    }
     GoogleMapController googleMapController = await _controller.future;
     if (currentLocation != null) {
       googleMapController.animateCamera(
@@ -124,88 +135,124 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.sizeOf(context).height / 2,
-            width: double.maxFinite,
-            child: currentLocation == null
-                ? const Center(child: Text("Loading"))
-                : Listener(
-                    onPointerDown: (event) {
-                      if (follow) {
-                        setState(() {
-                          follow = false;
-                        });
-                      }
-                    },
-                    child: GoogleMap(
-                      // mapType: MapType.hybrid,
-                      myLocationButtonEnabled: false,
-                      initialCameraPosition: CameraPosition(
-                        target: LatLng(currentLocation!.latitude!,
-                            currentLocation!.longitude!),
-                        zoom: 13.5,
-                      ),
-                      markers: {
-                        Marker(
-                          markerId: const MarkerId("currentLocation"),
-                          position: LatLng(currentLocation!.latitude!,
+      appBar: AppBar(
+        title: Text("Delivery Details"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.sizeOf(context).height / 1.75,
+              width: double.maxFinite,
+              child: currentLocation == null
+                  ? const Center(child: Text("Loading"))
+                  : Listener(
+                      onPointerDown: (event) {
+                        if (follow) {
+                          setState(() {
+                            follow = false;
+                          });
+                        }
+                      },
+                      child: GoogleMap(
+                        gestureRecognizers: {
+                          Factory<OneSequenceGestureRecognizer>(
+                            () => EagerGestureRecognizer(),
+                          ),
+                        },
+                        // mapType: MapType.hybrid,
+                        myLocationButtonEnabled: false,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(currentLocation!.latitude!,
                               currentLocation!.longitude!),
-                          onTap: () => setState(() {
-                            follow = true;
-                          }),
+                          zoom: 13.5,
                         ),
-                        Marker(
-                          markerId: const MarkerId("source"),
-                          position: widget.sourceLocation,
-                          infoWindow: const InfoWindow(
-                            title: "Restaurant",
-                            snippet: "Your food is picked up from here",
+                        markers: {
+                          Marker(
+                            markerId: const MarkerId("currentLocation"),
+                            position: LatLng(currentLocation!.latitude!,
+                                currentLocation!.longitude!),
+                            onTap: () => setState(() {
+                              follow = true;
+                            }),
                           ),
-                        ),
-                        Marker(
-                          markerId: const MarkerId("destination"),
-                          position: widget.destination,
-                          infoWindow: const InfoWindow(
-                            title: "Destination",
-                            snippet: "Your food will be delivered here",
+                          Marker(
+                            markerId: const MarkerId("source"),
+                            position: widget.sourceLocation,
+                            infoWindow: const InfoWindow(
+                              title: "Restaurant",
+                              snippet: "Your food is picked up from here",
+                            ),
                           ),
-                        ),
-                      },
-                      onMapCreated: (mapController) {
-                        _controller.complete(mapController);
-                      },
-                      polylines: {
-                        Polyline(
-                          polylineId: const PolylineId("route"),
-                          points: polylineCoordinates,
-                          color: const Color(0xFF7B61FF),
-                          width: 6,
-                        ),
-                      },
+                          Marker(
+                            markerId: const MarkerId("destination"),
+                            position: widget.destination,
+                            infoWindow: const InfoWindow(
+                              title: "Destination",
+                              snippet: "Your food will be delivered here",
+                            ),
+                          ),
+                        },
+                        onMapCreated: (mapController) {
+                          _controller.complete(mapController);
+                        },
+                        polylines: {
+                          Polyline(
+                            polylineId: const PolylineId("route"),
+                            points: polylineCoordinates,
+                            color: const Color(0xFF7B61FF),
+                            width: 6,
+                          ),
+                        },
+                      ),
+                    ),
+            ),
+            Container(
+              width: double.maxFinite,
+              height: MediaQuery.sizeOf(context).height / 2.5,
+              color: Theme.of(context).colorScheme.surface,
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "You are delivering for User",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-          ),
-          Container(
-            width: double.maxFinite,
-            height: MediaQuery.sizeOf(context).height / 2,
-            color: Colors.green.shade500,
-            padding: const EdgeInsets.all(10),
-            child: const Text(
-              "Your friend (and food) is on the way",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
+                  Divider(
+                    color: Theme.of(context).colorScheme.primary,
+                    // endIndent: 25,
+                    // indent: 25,
+                  ),
+                  Text(
+                    "Order Details",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Text("Restuarant: Tim Hortons"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Requested Food Item: White Hot Chocolate"),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text("Delivery Destination: 123 Anywhere St."),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _goToDelivery,
-        label: const Text('Recenter'),
+        label: userType == "delivery" ? Text("I've Arrived") : Text('Recenter'),
         icon: const Icon(Icons.fastfood_rounded),
       ),
     );
