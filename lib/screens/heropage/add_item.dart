@@ -29,7 +29,7 @@ class _AddItemState extends State<AddItem> {
 
     // Create a new item document in the restaurant's items subcollection
     await FirebaseFirestore.instance
-        .collection('restaurants')
+        .collection('Restaurants')
         .doc(widget.restaurantId)
         .collection('items')
         .add({

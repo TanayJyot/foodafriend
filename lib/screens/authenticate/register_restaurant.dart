@@ -56,12 +56,12 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
         ],
       ),
       body: Container(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
+          padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 50.0),
           child: Form(
               key: _formKey,
               child: Column(
                 children: <Widget>[
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Email'),
                     validator: (val) => val!.isEmpty ? "Enter an email" : null,
@@ -69,7 +69,7 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                       setState(() => email = val);
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Password'),
                     validator: (val) => val!.length < 6 ? "Enter a password 6+ chars long" : null,
@@ -79,39 +79,39 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                     } ,
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Name'),
                     validator: (val) => val!.isEmpty ? "Enter a name" : null,
                     onChanged: (val){
-                      setState(() => email = val);
+                      setState(() => name = val);
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Address'),
                     validator: (val) => val!.isEmpty ? "Enter an Address" : null,
                     onChanged: (val){
-                      setState(() => email = val);
+                      setState(() => address = val);
                     },
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Phone'),
                     validator: (val) => val!.isEmpty ? "Enter a phone number" : null,
                     onChanged: (val){
-                      setState(() => email = val);
+                      setState(() => phone = val);
                     },
-                  ), const SizedBox(height: 20),
+                  ), const SizedBox(height: 15),
                   TextFormField(
                     decoration: textInputDecoration.copyWith(hintText: 'Hours'),
                     validator: (val) => val!.isEmpty ? "Enter your hours of operation" : null,
                     onChanged: (val){
-                      setState(() => email = val);
+                      setState(() => hours = val);
                     },
                   ),
 
-                  const SizedBox(height: 20.0),
+                  const SizedBox(height: 15.0),
                   ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.pink[400]
@@ -121,6 +121,7 @@ class _RegisterRestaurantState extends State<RegisterRestaurant> {
                           setState(() {
                             loading = true;
                           });
+                          print(email);
                           dynamic result = await _auth.registerRestaurantWithEmailAndPassword(email, password, name, address, phone, hours);
                           if (result == null){
                             setState(() {
