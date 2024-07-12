@@ -357,7 +357,7 @@ class DashBoardScreenState extends State<DashBoardScreen  > {
                                         child: GestureDetector(
                                           onTap: () {Navigator.push(
                                             context,
-                                            MaterialPageRoute(builder: (context) => RestaurantMenu()),
+                                            MaterialPageRoute(builder: (context) => const RestaurantMenu()),
                                           );},
                                           child: Container(
                                             height: 40.h,
