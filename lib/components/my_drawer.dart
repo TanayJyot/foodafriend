@@ -1,3 +1,4 @@
+import "package:buildspace_s5/screens/heropage/heropage.dart";
 import "package:flutter/material.dart";
 import "package:buildspace_s5/components/my_drawer_tile.dart";
 import "package:buildspace_s5/pages/settings_page.dart";
@@ -33,7 +34,10 @@ class MyDrawer extends StatelessWidget {
           MyDrawerTile(
             text: "H O M E",
             icon: Icons.home,
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
           ),
 
           // settings list tile
