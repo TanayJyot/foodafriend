@@ -10,14 +10,14 @@ import "package:buildspace_s5/models/restaurant.dart";
 import "package:buildspace_s5/pages/food_page.dart";
 import "package:provider/provider.dart";
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class RestaurantMenu extends StatefulWidget {
+  const RestaurantMenu({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<RestaurantMenu> createState() => _RestaurantMenuState();
 }
 
-class _HomePageState extends State<HomePage>
+class _RestaurantMenuState extends State<RestaurantMenu>
     with SingleTickerProviderStateMixin {
   // tab controller
   late TabController _tabController;

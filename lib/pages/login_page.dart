@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:buildspace_s5/components/my_button.dart";
 import "package:buildspace_s5/components/my_textfield.dart";
-import "package:buildspace_s5/pages/home_page.dart";
+import "package:buildspace_s5/pages/restaurant_menu.dart";
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const HomePage(),
+        builder: (context) => const RestaurantMenu(),
       ),
     );
   }

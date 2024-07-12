@@ -3,12 +3,11 @@ import 'package:buildspace_s5/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
-// import  'package:buildspace_s5/pages/home_page.dart';
+// import  'package:buildspace_s5/pages/restaurant_menu.dart';
 
 
 
@@ -38,8 +37,8 @@ Future<void> main() async{
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  static const LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
-  static const LatLng destination = LatLng(37.33429383, -122.06600055);
+  // static const LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
+  // static const LatLng destination = LatLng(37.33429383, -122.06600055);
 
   // This widget is the root of your application.
   @override

@@ -1,3 +1,4 @@
+import 'package:buildspace_s5/pages/restaurant_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -353,32 +354,38 @@ class DashBoardScreenState extends State<DashBoardScreen  > {
                                     Positioned(
                                         left: 10.w,
                                         bottom: 40.h,
-                                        child: Container(
-                                          height: 40.h,
-                                          width: 310.w,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10.r),
-                                            gradient: const LinearGradient(
-                                              colors: [Colors.indigo, Colors.indigoAccent],
-                                              begin: Alignment.bottomLeft,
-                                              end: Alignment.topRight,
+                                        child: GestureDetector(
+                                          onTap: () {Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => RestaurantMenu()),
+                                          );},
+                                          child: Container(
+                                            height: 40.h,
+                                            width: 310.w,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.r),
+                                              gradient: const LinearGradient(
+                                                colors: [Colors.indigo, Colors.indigoAccent],
+                                                begin: Alignment.bottomLeft,
+                                                end: Alignment.topRight,
+                                              ),
                                             ),
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              const Icon(Icons.percent,color: Colors.white,),
-                                              const Text("50% OFF up to 100",style: TextStyle(color: Colors.white),)
-                                              ,SizedBox(width: 150.w,),Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.indigo,
-                                                    borderRadius: BorderRadius.circular(10.r)
-                                                ),
-                                                child: Padding(
-                                                  padding:  EdgeInsets.all(5.sp),
-                                                  child: const Text("+1",style: TextStyle(color: Colors.white),),
-                                                ),
-                                              ),SizedBox(width: 10.w,)
-                                            ],
+                                            child: Row(
+                                              children: [
+                                                const Icon(Icons.percent,color: Colors.white,),
+                                                const Text("50% OFF up to 100",style: TextStyle(color: Colors.white),)
+                                                ,SizedBox(width: 150.w,),Container(
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.indigo,
+                                                      borderRadius: BorderRadius.circular(10.r)
+                                                  ),
+                                                  child: Padding(
+                                                    padding:  EdgeInsets.all(5.sp),
+                                                    child: const Text("+1",style: TextStyle(color: Colors.white),),
+                                                  ),
+                                                ),SizedBox(width: 10.w,)
+                                              ],
+                                            ),
                                           ),
                                         ))
                                   ],
