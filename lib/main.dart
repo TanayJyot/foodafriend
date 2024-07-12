@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
+import  'package:buildspace_s5/pages/home_page.dart';
 
 
 
@@ -75,16 +76,16 @@ class MyApp extends StatelessWidget {
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 
         // Tanay
-        home: Wrapper(),
+        // home: Wrapper(),
           // Restaurant
         // home: RestaurantWrapper(),
 
 
         //Akshatt
 
-        // debugShowCheckedModeBanner: false,
-        // home: const HomePage(),
-        // theme: Provider.of<ThemeProvider>(context).themeData,
+        debugShowCheckedModeBanner: false,
+        home: const HomePage(),
+        theme: Provider.of<ThemeProvider>(context).themeData,
       ),
     );
   }
