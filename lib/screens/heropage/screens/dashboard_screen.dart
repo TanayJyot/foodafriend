@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../services/auth.dart';
 import '../my_behaviour.dart';
 
 class DashBoardScreen extends StatefulWidget{
@@ -14,6 +15,7 @@ class DashBoardScreen extends StatefulWidget{
 }
 
 class DashBoardScreenState extends State<DashBoardScreen  > {
+  final AuthService _auth = AuthService();
 
   List<String> tabName=[
     "sort",
@@ -92,8 +94,11 @@ class DashBoardScreenState extends State<DashBoardScreen  > {
                       },
                       child: SizedBox(
                         height: 30.h,width: 30.w,
-                        child: const CircleAvatar(
-                          backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiaLO5Z4Ga_OJMvDSNnn2b_UT6iMUvWU2Btg&usqp=CAU",),
+                        child: GestureDetector(
+                          onTap: () => _auth.signOut(),
+                          child: const CircleAvatar(
+                            backgroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiaLO5Z4Ga_OJMvDSNnn2b_UT6iMUvWU2Btg&usqp=CAU",),
+                          ),
                         ),
                       ),
                     )
