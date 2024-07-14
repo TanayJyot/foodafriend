@@ -1,5 +1,5 @@
 import 'package:buildspace_s5/models/user.dart';
-import 'package:buildspace_s5/screens/restaurantpages/restaurant_wrapper.dart';
+// import 'package:buildspace_s5/screens/restaurantpages/restaurant_wrapper.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
 import 'package:buildspace_s5/services/firebase_messaging.dart';
@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
       value: AuthService().user,
       initialData: null,
       catchError: (_, __) => null,
-      child: const MaterialApp(
+      child: MaterialApp(
         navigatorKey: navigatorKey,
         // Hasnain
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
