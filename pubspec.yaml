@@ -50,7 +50,7 @@ dependencies:
   flutter_screenutil: ^5.6.1
   font_awesome_flutter: ^10.3.0
   persistent_bottom_nav_bar: ^6.2.1
-  unicons: 2.1.2
+  unicons: ^2.1.2
   #    add this dependency
   flutter_launcher_icons: ^0.13.1
 #  after add dependency run
