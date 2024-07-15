@@ -6,12 +6,11 @@ import 'package:buildspace_s5/screens/heropage/screens/dashboard_screen.dart';
 import 'package:buildspace_s5/screens/heropage/screens/money_screen.dart';
 import 'package:buildspace_s5/screens/heropage/screens/dining_screen.dart';
 
-class HeroPage extends StatefulWidget{
+class HeroPage extends StatefulWidget {
   const HeroPage({super.key});
 
   @override
-  State<StatefulWidget> createState()=>HeroPageState();
-
+  State<StatefulWidget> createState() => HeroPageState();
 }
 
 class HeroPageState extends State<HeroPage> {
@@ -22,11 +21,10 @@ class HeroPageState extends State<HeroPage> {
     // TODO: implement initState
     super.initState();
     setState(() {
-
       _controller = PersistentTabController(initialIndex: 0);
-
     });
   }
+
   List<Widget> _buildScreens() {
     return [
       const DashBoardScreen(),
@@ -34,21 +32,23 @@ class HeroPageState extends State<HeroPage> {
       const MoneyScreen(),
     ];
   }
+
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon:  const Icon(Icons.electric_moped),
+        icon: const Icon(Icons.moped),
         title: ("Delivery"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon:  const Icon(Icons.dining_outlined),
+        icon: const Icon(Icons.dining_outlined),
         title: ("Dining"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: CupertinoColors.systemGrey,
-      ), PersistentBottomNavBarItem(
-        icon:  const Icon(UniconsLine.wallet),
+      ),
+      PersistentBottomNavBarItem(
+        icon: const Icon(UniconsLine.wallet),
         title: ("Money"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: CupertinoColors.systemGrey,
@@ -70,7 +70,8 @@ class HeroPageState extends State<HeroPage> {
         resizeToAvoidBottomInset: true,
         stateManagement: true,
         // hideNavigationBarWhenKeyboardShows: true,
-        navBarHeight: kBottomNavigationBarHeight, // Use kBottomNavigationBarHeight to manage nav bar height
+        navBarHeight:
+            kBottomNavigationBarHeight, // Use kBottomNavigationBarHeight to manage nav bar height
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
           colorBehindNavBar: Colors.white,

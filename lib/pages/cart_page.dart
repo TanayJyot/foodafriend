@@ -1,6 +1,8 @@
+import "package:buildspace_s5/screens/order_tracking.dart";
 import "package:flutter/material.dart";
 import "package:buildspace_s5/components/my_button.dart";
 import "package:buildspace_s5/components/my_cart_tile.dart";
+import "package:google_maps_flutter/google_maps_flutter.dart";
 import "../models/restaurant.dart";
 import "package:provider/provider.dart";
 
@@ -78,7 +80,20 @@ class CartPage extends StatelessWidget {
             ),
             // button to checkout
 
-            MyButton(text: "Checkout", onTap: () {}),
+            MyButton(
+                text: "Checkout",
+                onTap: () {
+                  LatLng sourceLocation =
+                      LatLng(43.664191714479635, -79.39623146137073);
+                  LatLng destination =
+                      LatLng(43.668910354936365, -79.39777641370725);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OrderTrackingPage(
+                              sourceLocation: sourceLocation,
+                              destination: destination)));
+                }),
 
             const SizedBox(
               height: 25,

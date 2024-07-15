@@ -72,7 +72,7 @@ class _RestaurantMenuState extends State<RestaurantMenu>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      drawer: const MyDrawer(),
+      // drawer: const MyDrawer(),
       body: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
                 MySliverAppBar(
