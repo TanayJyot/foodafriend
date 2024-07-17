@@ -408,7 +408,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    RestaurantMenu()));
+                                                    const RestaurantMenu()));
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.symmetric(
@@ -499,7 +499,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                                             restaurants[index]
                                                                 ['name'],
                                                             style: TextStyle(
-                                                                shadows: [
+                                                                shadows: const [
                                                                   Shadow(
                                                                     color: Colors
                                                                         .black,

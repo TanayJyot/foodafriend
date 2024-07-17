@@ -59,7 +59,7 @@ class MyCartTile extends StatelessWidget {
 
                         const Spacer(),
 
-                        // quantitiy bar
+                        // quantity bar
                         QuantitySelector(
                           quantity: cartItem.quantity,
                           food: cartItem.food,

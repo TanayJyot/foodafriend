@@ -1,13 +1,43 @@
 import "package:buildspace_s5/screens/order_tracking.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:buildspace_s5/components/my_button.dart";
 import "package:buildspace_s5/components/my_cart_tile.dart";
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "../models/restaurant.dart";
 import "package:provider/provider.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
+
+  Future<void> _addItems(itemList) async {
+
+    List<Map<String, dynamic>> listOfItems= [];
+    for (final item in itemList){
+      listOfItems.add({
+        "name": item.food.name,
+        "price": item.food.price,
+        "quantity": item.quantity
+      });
+    }
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      final uid = user?.uid;
+
+      // Create a new item document in the restaurant's items subcollection
+      await FirebaseFirestore.instance.collection('Order Queue').add({
+        'itemList': listOfItems,
+        'timestamp': Timestamp.now(),  // Optional: Add a timestamp for order
+        'user_id': uid
+      });
+    } catch (e) {
+      print('Error adding items to Firestore: $e');
+      // Optionally, you can show a snackbar or dialog to inform the user of the error
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +112,14 @@ class CartPage extends StatelessWidget {
 
             MyButton(
                 text: "Checkout",
-                onTap: () {
+                onTap: () async {
                   LatLng sourceLocation =
-                      LatLng(43.664191714479635, -79.39623146137073);
+                      const LatLng(43.664191714479635, -79.39623146137073);
                   LatLng destination =
-                      LatLng(43.668910354936365, -79.39777641370725);
+                      const LatLng(43.668910354936365, -79.39777641370725);
+                  await _addItems(userCart);
+
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(

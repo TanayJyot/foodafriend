@@ -1,5 +1,5 @@
 import 'package:buildspace_s5/models/user.dart';
-// import 'package:buildspace_s5/screens/restaurantpages/restaurant_wrapper.dart';
+import 'package:buildspace_s5/screens/restaurantpages/restaurant_wrapper.dart';
 import 'package:buildspace_s5/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
 import 'package:buildspace_s5/services/firebase_messaging.dart';
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 
         // Tanay
-        home: Wrapper(),
+        home: const Wrapper(),
         // Restaurant
         // home: RestaurantWrapper(),
 

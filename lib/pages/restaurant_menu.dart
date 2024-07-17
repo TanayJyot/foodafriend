@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:buildspace_s5/components/my_current_location.dart";
 import "package:buildspace_s5/components/my_description_box.dart";
-import "package:buildspace_s5/components/my_drawer.dart";
 import "package:buildspace_s5/components/my_food_tile.dart";
 import "package:buildspace_s5/components/my_sliver_app_bar.dart";
 import "package:buildspace_s5/components/my_tab_bar.dart";

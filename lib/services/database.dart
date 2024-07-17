@@ -28,9 +28,9 @@ class DatabaseService {
   }
 
   Future getRestaurants() async {
-    QuerySnapshot restaurants_snapshot = await restaurantCollection.get();
+    QuerySnapshot restaurantsSnapshot = await restaurantCollection.get();
     List restaurants = [];
-    for (QueryDocumentSnapshot doc in restaurants_snapshot.docs) {
+    for (QueryDocumentSnapshot doc in restaurantsSnapshot.docs) {
       restaurants.add(doc.data());
     }
     print(restaurants);
