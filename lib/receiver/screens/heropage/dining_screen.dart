@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../my_behaviour.dart';
+import 'my_behaviour.dart';
 
 class DiningScreen extends StatefulWidget{
   const DiningScreen({super.key});

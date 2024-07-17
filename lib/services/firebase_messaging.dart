@@ -1,4 +1,4 @@
-import 'package:buildspace_s5/screens/order_tracking.dart';
+import 'package:buildspace_s5/deliverer/screens/order_tracking.dart';
 import 'package:buildspace_s5/shared/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';

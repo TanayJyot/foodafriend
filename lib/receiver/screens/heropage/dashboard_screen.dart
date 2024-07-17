@@ -1,11 +1,11 @@
-import 'package:buildspace_s5/pages/restaurant_menu.dart';
+import 'package:buildspace_s5/receiver/screens/heropage/item_screens/restaurant_menu.dart';
 import 'package:buildspace_s5/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../services/auth.dart';
-import '../my_behaviour.dart';
+import 'my_behaviour.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -438,7 +438,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                                                       10.r),
                                                             ),
                                                             child: Image.asset(
-                                                              "lib/images/burgers/burger${index + 1}.jpeg",
+                                                              "assets/item_images/burgers/burger${index + 1}.jpeg",
                                                               fit: BoxFit.fill,
                                                             ))),
                                                     Padding(

@@ -11,74 +11,38 @@ class Restaurant extends ChangeNotifier {
     Food(
         name: "Cheese Burger",
         description: "A beef burger with melted cheddar cheese",
-        imagePath: "lib/images/burgers/burger1.jpeg",
+        imagePath: "assets/item_images/burgers/burger1.jpeg",
         price: 2.99,
         category: FoodCategory.burgers),
 
     Food(
         name: "Chicken Burger",
         description: "A chicken burger with cheddar cheese, lettuce and tomato",
-        imagePath: "lib/images/burgers/burger2.jpeg",
+        imagePath: "assets/item_images/burgers/burger2.jpeg",
         price: 1.99,
         category: FoodCategory.burgers),
 
     Food(
         name: "Veggie Burger",
         description: "A veggie patty burger with tomato and pickles",
-        imagePath: "lib/images/burgers/burger3.jpeg",
+        imagePath: "assets/item_images/burgers/burger3.jpeg",
         price: 0.99,
         category: FoodCategory.burgers),
 
     Food(
         name: "Special Burger",
         description: "A special 5 cheese burger with seasoned beef patty",
-        imagePath: "lib/images/burgers/burger4.jpeg",
+        imagePath: "assets/item_images/burgers/burger4.jpeg",
         price: 4.99,
         category: FoodCategory.burgers),
 
     Food(
         name: "Normie Burger",
         description: "A normie",
-        imagePath: "lib/images/burgers/burger5.jpeg",
+        imagePath: "assets/item_images/burgers/burger5.jpeg",
         price: 1.99,
         category: FoodCategory.burgers),
 
-    // desserts
-
-    // Food(
-    //     name: "Caramel Tart",
-    //     description: "A caramel tart",
-    //     imagePath: "lib/images/desserts/desser1.jpeg",
-    //     price: 2.99,
-    //     category: FoodCategory.desserts),
-
-    // Food(
-    //     name: "Chocolate Pudding",
-    //     description: "A decadent chocolate pudding",
-    //     imagePath: "lib/images/desserts/dessert2.jpeg",
-    //     price: 3.99,
-    //     category: FoodCategory.desserts),
-
-    // Food(
-    //     name: "Chocolate Brownie",
-    //     description: "A chocolate brownie",
-    //     imagePath: "lib/images/desserts/dessert3.jpeg",
-    //     price: 0.99,
-    //     category: FoodCategory.desserts),
-
-    // Food(
-    //     name: "Vanilla Icecream Sundae",
-    //     description: "A special ice cream sundae",
-    //     imagePath: "lib/images/desserts/dessert4.jpeg",
-    //     price: 4.99,
-    //     category: FoodCategory.desserts),
-
-    // Food(
-    //     name: "Tangerine Tart",
-    //     description: "A tangerine tart",
-    //     imagePath: "lib/images/desserts/dessert5.jpeg",
-    //     price: 1.99,
-    //     category: FoodCategory.desserts),
   ];
 
   /*

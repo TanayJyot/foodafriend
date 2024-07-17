@@ -3,7 +3,7 @@ import 'package:buildspace_s5/shared/constants.dart';
 import 'package:buildspace_s5/shared/loading.dart';
 import 'package:flutter/material.dart';
 
-import '../../services/auth.dart';
+import '../../../services/auth.dart';
 
 class Register extends StatefulWidget {
   final toggleView;
@@ -200,4 +200,3 @@ class _RegisterState extends State<Register> {
 }
 
 // TODO Add the roles that the user would want to play using UserType
-

@@ -1,5 +1,5 @@
-import 'package:buildspace_s5/screens/authenticate/register.dart';
-import 'package:buildspace_s5/screens/authenticate/sign_in.dart';
+import 'package:buildspace_s5/receiver/authenticate/register.dart';
+import 'package:buildspace_s5/receiver/authenticate/sign_in.dart';
 import 'package:flutter/material.dart';
 
 class Authenticate extends StatefulWidget {

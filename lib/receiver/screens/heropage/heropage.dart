@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:unicons/unicons.dart';
-import 'package:buildspace_s5/screens/heropage/screens/dashboard_screen.dart';
-import 'package:buildspace_s5/screens/heropage/screens/money_screen.dart';
-import 'package:buildspace_s5/screens/heropage/screens/dining_screen.dart';
+import 'package:buildspace_s5/receiver/screens/heropage/dashboard_screen.dart';
+import 'package:buildspace_s5/receiver/screens/heropage/money_screen.dart';
+import 'package:buildspace_s5/receiver/screens/heropage/dining_screen.dart';
 
 class HeroPage extends StatefulWidget {
   const HeroPage({super.key});

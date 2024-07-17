@@ -1,6 +1,5 @@
 import 'package:buildspace_s5/models/user.dart';
-import 'package:buildspace_s5/screens/restaurantpages/restaurant_wrapper.dart';
-import 'package:buildspace_s5/screens/wrapper.dart';
+import 'package:buildspace_s5/receiver/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
 import 'package:buildspace_s5/services/firebase_messaging.dart';
 import 'package:buildspace_s5/shared/constants.dart';
@@ -11,7 +10,6 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'package:buildspace_s5/themes/theme_provider.dart';
 import 'package:buildspace_s5/models/restaurant.dart';
-// import  'package:buildspace_s5/pages/restaurant_menu.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,6 +1,6 @@
 import 'package:buildspace_s5/models/user.dart';
-import 'package:buildspace_s5/screens/authenticate/authenticate_restaurant.dart';
-import 'package:buildspace_s5/screens/heropage/add_item.dart';
+import 'package:buildspace_s5/restaurant/authenticate/authenticate_restaurant.dart';
+import 'package:buildspace_s5/restaurant/screens/add_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

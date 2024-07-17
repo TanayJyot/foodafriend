@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:buildspace_s5/components/my_button.dart";
+import 'package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_button.dart';
 import "package:buildspace_s5/models/food.dart";
 import "package:buildspace_s5/models/restaurant.dart";
 import "package:provider/provider.dart";
