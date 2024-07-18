@@ -1,9 +1,9 @@
+import 'package:buildspace_s5/deliverer/screens/available_orders.dart';
 import 'package:buildspace_s5/deliverer/screens/order_tracking.dart';
 import 'package:buildspace_s5/shared/constants.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 
 @pragma('vm:entry-point')
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
@@ -12,15 +12,24 @@ Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print("Payload: ${message.data}");
 }
 
-
 class FCM_Service {
   final _firebaseMessaging = FirebaseMessaging.instance;
 
   static const LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   static const LatLng destination = LatLng(37.33429383, -122.06600055);
 
+  void subscribeToTopic(String topic) {
+    _firebaseMessaging.subscribeToTopic(topic);
+  }
+
   void handleMessage(RemoteMessage? message) {
     if (message == null) return;
+
+    if (message.data["type"] == "deliveryRequest") {
+      navigatorKey.currentState?.push(MaterialPageRoute(
+          builder: (context) => AvaialableOrders(location: "Your Location")));
+      return;
+    }
 
     navigatorKey.currentState?.push(MaterialPageRoute(
         builder: (context) => const OrderTrackingPage(

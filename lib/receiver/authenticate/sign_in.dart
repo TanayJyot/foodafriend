@@ -1,10 +1,10 @@
 import 'package:buildspace_s5/services/auth.dart';
+import 'package:buildspace_s5/services/firebase_messaging.dart';
 import 'package:buildspace_s5/shared/constants.dart';
 import 'package:buildspace_s5/shared/loading.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
-
   final toggleView;
   const SignIn({super.key, required this.toggleView});
 
@@ -13,7 +13,6 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-
   final _formKey = GlobalKey<FormState>();
 
   final AuthService _auth = AuthService();
@@ -23,89 +22,98 @@ class _SignInState extends State<SignIn> {
   String password = '';
   String error = '';
 
-
   @override
   Widget build(BuildContext context) {
-    return loading? const Loading() : Scaffold(
-      backgroundColor: Colors.brown[100],
-      appBar: AppBar(
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-        title: const Text(
-          'Sign in to Food a Friend',
-        style: TextStyle(color: Colors.white),
-        ),
-        actions: <Widget>[
-          TextButton.icon(
-              onPressed: () {
-                widget.toggleView();
-              },
-              icon: const Icon(Icons.person,
-              color: Colors.white,),
-            label: const Text('Register',
-            style: TextStyle(
-              color: Colors.white
-            ),),
-
-          )
-        ],
-      ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Email'),
-                validator: (val) => val!.isEmpty ? "Enter an email" : null,
-                onChanged: (val){
-                  setState(() => email = val);
-                },
+    return loading
+        ? const Loading()
+        : Scaffold(
+            backgroundColor: Colors.brown[100],
+            appBar: AppBar(
+              backgroundColor: Colors.brown[400],
+              elevation: 0.0,
+              title: const Text(
+                'Sign in to Food a Friend',
+                style: TextStyle(color: Colors.white),
               ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: textInputDecoration.copyWith(hintText: 'Password'),
-                validator: (val) => val!.length < 6 ? "Enter a password 6+ chars long" : null,
-                obscureText: true,
-                onChanged:(val){
-                  setState(() => password = val);
-                } ,
-              ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.pink[400]
-                ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() => loading = true);
-                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
-                      if (result == null){
-                        setState(() {
-                          error = 'Could not sign in with those credentials';
-                          loading = false;
-                        });//TODO There is a way to get the error directly from firebase_auth here
-                      }
-                    }
+              actions: <Widget>[
+                TextButton.icon(
+                  onPressed: () {
+                    widget.toggleView();
                   },
-                  child: const Text(
-                    'Sign In',
+                  icon: const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
+                  label: const Text(
+                    'Register',
                     style: TextStyle(color: Colors.white),
-                  )
-              ),
-              const SizedBox(height: 12.0),
-              Text(
-                error,
-                style: const TextStyle(color: Colors.red, fontSize: 14.0),
-              ),
-
-            ],
-          )
-        )
-      ),
-    );
+                  ),
+                )
+              ],
+            ),
+            body: Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20.0, horizontal: 50.0),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          decoration:
+                              textInputDecoration.copyWith(hintText: 'Email'),
+                          validator: (val) =>
+                              val!.isEmpty ? "Enter an email" : null,
+                          onChanged: (val) {
+                            setState(() => email = val);
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          decoration: textInputDecoration.copyWith(
+                              hintText: 'Password'),
+                          validator: (val) => val!.length < 6
+                              ? "Enter a password 6+ chars long"
+                              : null,
+                          obscureText: true,
+                          onChanged: (val) {
+                            setState(() => password = val);
+                          },
+                        ),
+                        const SizedBox(height: 20.0),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.pink[400]),
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                setState(() => loading = true);
+                                dynamic result =
+                                    await _auth.signInWithEmailAndPassword(
+                                        email, password);
+                                if (result == null) {
+                                  setState(() {
+                                    error =
+                                        'Could not sign in with those credentials';
+                                    loading = false;
+                                  }); //TODO There is a way to get the error directly from firebase_auth here
+                                } else {
+                                  FCM_Service().subscribeToTopic("deliverer");
+                                }
+                              }
+                            },
+                            child: const Text(
+                              'Sign In',
+                              style: TextStyle(color: Colors.white),
+                            )),
+                        const SizedBox(height: 12.0),
+                        Text(
+                          error,
+                          style: const TextStyle(
+                              color: Colors.red, fontSize: 14.0),
+                        ),
+                      ],
+                    ))),
+          );
   }
 }
 // TODO I/flutter ( 7359): [firebase_auth/invalid-email] The email address is badly formatted.
