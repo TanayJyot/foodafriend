@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:unicons/unicons.dart';
 import 'package:buildspace_s5/receiver/screens/heropage/dashboard_screen.dart';
-import 'package:buildspace_s5/receiver/screens/heropage/money_screen.dart';
-import 'package:buildspace_s5/receiver/screens/heropage/dining_screen.dart';
+import 'profile_screen.dart'; // Import the profile screen
+import 'package';
 
 class HeroPage extends StatefulWidget {
   const HeroPage({super.key});
@@ -15,41 +15,32 @@ class HeroPage extends StatefulWidget {
 
 class HeroPageState extends State<HeroPage> {
   late PersistentTabController? _controller;
+  final String userId = 'current_user_uid'; // Replace with actual UID logic
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setState(() {
-      _controller = PersistentTabController(initialIndex: 0);
-    });
+    _controller = PersistentTabController(initialIndex: 0);
   }
 
   List<Widget> _buildScreens() {
     return [
       const DashBoardScreen(),
-      const DiningScreen(),
-      const MoneyScreen(),
+      ProfileScreen(uid: userId), // Profile screen with user ID
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.moped),
-        title: ("Delivery"),
+        icon: const Icon(Icons.dashboard),
+        title: ("Dashboard"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.dining_outlined),
-        title: ("Dining"),
-        activeColorPrimary: Colors.pink,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
-        icon: const Icon(UniconsLine.wallet),
-        title: ("Money"),
+        icon: const Icon(Icons.person),
+        title: ("Profile"),
         activeColorPrimary: Colors.pink,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -69,24 +60,11 @@ class HeroPageState extends State<HeroPage> {
         handleAndroidBackButtonPress: true,
         resizeToAvoidBottomInset: true,
         stateManagement: true,
-        // hideNavigationBarWhenKeyboardShows: true,
-        navBarHeight:
-            kBottomNavigationBarHeight, // Use kBottomNavigationBarHeight to manage nav bar height
+        navBarHeight: kBottomNavigationBarHeight,
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
           colorBehindNavBar: Colors.white,
         ),
-        // popAllScreensOnTapOfSelectedTab: true,
-        // popActionScreens: PopActionScreensType.all,
-        // itemAnimationProperties: const ItemAnimationProperties(
-        //   duration: Duration(milliseconds: 200),
-        //   curve: Curves.ease,
-        // ),
-        // screenTransitionAnimation: const ScreenTransitionAnimation(
-        //   animateTabTransition: true,
-        //   curve: Curves.ease,
-        //   duration: Duration(milliseconds: 200),
-        // ),
         navBarStyle: NavBarStyle.style3,
       ),
     );

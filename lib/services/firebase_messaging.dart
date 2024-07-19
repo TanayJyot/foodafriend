@@ -27,13 +27,13 @@ class FCM_Service {
 
     if (message.data["type"] == "deliveryRequest") {
       navigatorKey.currentState?.push(MaterialPageRoute(
-          builder: (context) => AvailableOrders(location: "Your Location")));
+          builder: (context) => const AvailableOrders(location: "Your Location")));
       return;
     }
 
     navigatorKey.currentState?.push(MaterialPageRoute(
         builder: (context) => const OrderTrackingPage(
-            sourceLocation: sourceLocation, destination: destination)));
+            sourceLocation: sourceLocation, destination: destination, name: "Default", item: "Coffee",)));
   }
 
   Future initPushNotifications() async {

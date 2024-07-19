@@ -1,3 +1,4 @@
+import 'package:buildspace_s5/models/queue_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/cart_item.dart';
@@ -80,6 +81,42 @@ class DatabaseService {
       // Optionally, you can show a snackbar or dialog to inform the user of the error
     }
   }
+
+  Future<Iterable<OrderQueue>> orderQueueFromSnapshot(QuerySnapshot snapshot) async {
+    List<OrderQueue> orderQueueList = [];
+
+    for (var doc in snapshot.docs) {
+      // Retrieve item and user_id from OrderQueue document
+      String item = doc.get("itemList")[0]["name"] ?? "";
+      print(item);
+      String userId = doc.get('user_id');
+      print(userId);
+      // Fetch user name from users collection using user_id
+      String userName = await _getUserName(userId);
+
+      String id = doc.id;
+
+      // Create OrderQueue instance and add to list
+      orderQueueList.add(OrderQueue(item: item, name: userName, id: id));
+    }
+
+    return orderQueueList;
+  }
+
+  Future<String> _getUserName(String userId) async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userId)
+        .get();
+
+    if (userDoc.exists) {
+      return userDoc.get('name');
+    } else {
+      return '';
+    }
+  }
+
+
 
 
 

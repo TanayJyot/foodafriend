@@ -8,8 +8,10 @@ import 'package:location/location.dart';
 
 class OrderTrackingPage extends StatefulWidget {
   final LatLng sourceLocation, destination;
+  final String name;
+  final String item;
   const OrderTrackingPage(
-      {super.key, required this.sourceLocation, required this.destination});
+      {super.key, required this.sourceLocation, required this.destination, required this.name, required this.item});
   @override
   State<OrderTrackingPage> createState() => OrderTrackingPageState();
 }
@@ -214,9 +216,9 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
                   Text(
-                    "You are delivering for User",
+                    "You are delivering for ${widget.name}",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 20,
@@ -239,7 +241,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text("Requested Food Item: White Hot Chocolate"),
+                  Text("Requested Food Item: ${widget.item}"),
                   const SizedBox(
                     height: 10,
                   ),

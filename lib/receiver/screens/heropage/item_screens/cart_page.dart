@@ -1,12 +1,10 @@
 import "package:buildspace_s5/receiver/screens/order_tracking.dart";
-import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import 'package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_button.dart';
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "../../../../../models/cart_item.dart";
 import "../../../../../models/restaurant.dart";
 import "package:provider/provider.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:buildspace_s5/services/database.dart';
 
 import "package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_quantity_selector.dart";
