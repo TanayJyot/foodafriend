@@ -237,7 +237,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const Text("Restuarant: Tim Hortons"),
+                  const Text("Restaurant: Tim Hortons"),
                   const SizedBox(
                     height: 10,
                   ),

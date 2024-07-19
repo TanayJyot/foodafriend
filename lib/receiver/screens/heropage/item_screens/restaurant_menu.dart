@@ -1,11 +1,10 @@
-import "package:flutter/material.dart";
-import "package:buildspace_s5/models/food.dart";
-import "package:buildspace_s5/models/restaurant.dart";
-import 'package:buildspace_s5/receiver/screens/heropage/item_screens/food_page.dart';
 import 'package:buildspace_s5/receiver/screens/heropage/item_screens/cart_page.dart';
-import "package:provider/provider.dart";
-
-
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:buildspace_s5/models/food.dart';
+import 'package:buildspace_s5/models/restaurant.dart';
+import 'package:buildspace_s5/receiver/screens/heropage/item_screens/food_page.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantMenu extends StatefulWidget {
   const RestaurantMenu({super.key});
@@ -14,349 +13,195 @@ class RestaurantMenu extends StatefulWidget {
   State<RestaurantMenu> createState() => _RestaurantMenuState();
 }
 
-class _RestaurantMenuState extends State<RestaurantMenu>
-    with SingleTickerProviderStateMixin {
-  // tab controller
-  late TabController _tabController;
-
+class _RestaurantMenuState extends State<RestaurantMenu> {
   @override
-  void initState() {
-    super.initState();
-    _tabController =
-        TabController(length: FoodCategory.values.length, vsync: this);
+  Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: _buildAppBar(),
+      body: Column(
+        children: [
+          _buildSearchBar(),
+          _buildCategoryTabs(),
+          Expanded(
+            child: _buildFoodItemsList(),
+          ),
+        ],
+      ),
+    );
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  // sort out and return a list of food items that belong to a specfic category
-
-  List<Food> _filterMenuByCategory(FoodCategory category, List<Food> fullMenu) {
-    return fullMenu.where((food) => food.category == category).toList();
-  }
-
-  // return list of foods in given category
-  List<Widget> getFoodInThisCategory(List<Food> fullMenu) {
-    return FoodCategory.values.map((category) {
-      List<Food> categoryMenu = _filterMenuByCategory(category, fullMenu);
-      return ListView.builder(
-        itemCount: categoryMenu.length,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemBuilder: (context, index) {
-          // get single food
-          final food = categoryMenu[index];
-
-          // return food tile
-          return FoodTile(
-            food: food,
-            onTap: () => Navigator.push(
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      backgroundColor: Colors.pink,
+      title: Row(
+        children: [
+          Icon(
+            Icons.location_on,
+            size: 25.sp,
+            color: Colors.white,
+          ),
+          SizedBox(width: 5.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Deliver to",
+                  style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Current Location",
+                      style: TextStyle(color: Colors.white, fontSize: 14.sp, fontWeight: FontWeight.bold),
+                    ),
+                    Icon(Icons.arrow_drop_down, color: Colors.white),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.shopping_cart, color: Colors.white),
+          onPressed: (
+              ) {
+            // Navigate to cart page
+            Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => FoodPage(food: food),
+                builder: (context) => CartPage(),
               ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return Padding(
+      padding: EdgeInsets.all(8.w),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search for dishes",
+                  prefixIcon: Icon(Icons.search, color: Colors.pink),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.mic, color: Colors.pink),
+              onPressed: () {
+                // Implement voice search
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryTabs() {
+    List<String> categories = ["All", "Popular", "Recommended", "Burgers", "Pizzas", "Desserts"];
+    return Container(
+      height: 40.h,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 4.w),
+            child: Chip(
+              label: Text(categories[index]),
+              backgroundColor: index == 0 ? Colors.pink : Colors.grey[200],
+              labelStyle: TextStyle(color: index == 0 ? Colors.white : Colors.black),
             ),
           );
         },
-      );
-    }).toList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
-      // drawer: const MyDrawer(),
-      body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                MySliverAppBar(
-                  title: MyTabBar(
-                    tabController: _tabController,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Divider(
-                        indent: 25,
-                        endIndent: 25,
-                        color: Theme.of(context).colorScheme.secondary,
-                      ),
-                      // my current location
-                      const MyCurrentLocation(),
-
-                      // description box
-                      const MyDescriptionBox()
-                    ],
-                  ),
-                ),
-              ],
-          body: Consumer<Restaurant>(
-            builder: (context, restaurant, child) => TabBarView(
-                controller: _tabController,
-                children: getFoodInThisCategory(restaurant.menu)),
-          )),
+      ),
     );
   }
-}
 
-
-class MySliverAppBar extends StatelessWidget {
-  final Widget child;
-  final Widget title;
-
-  const MySliverAppBar({super.key, required this.child, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return SliverAppBar(
-      expandedHeight: 340,
-      collapsedHeight: 120,
-      floating: false,
-      pinned: true,
-      actions: [
-        //cart button
-        IconButton(
-          onPressed: () {
-            // go to cart page
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CartPage(),
-                ));
+  Widget _buildFoodItemsList() {
+    return Consumer<Restaurant>(
+      builder: (context, restaurant, child) {
+        return ListView.builder(
+          itemCount: restaurant.menu.length,
+          itemBuilder: (context, index) {
+            final food = restaurant.menu[index];
+            return _buildFoodItemCard(food);
           },
-          icon: const Icon(Icons.shopping_cart_checkout_rounded),
-        )
-      ],
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      foregroundColor: Theme.of(context).colorScheme.inversePrimary,
-      title: const Text("Food-A-Friend"),
-      flexibleSpace: FlexibleSpaceBar(
-        background:
-            Padding(padding: const EdgeInsets.only(bottom: 50.0), child: child),
-        title: title,
-        centerTitle: true,
-        titlePadding: const EdgeInsets.only(left: 0, right: 0, top: 0),
-        expandedTitleScale: 1,
-      ),
-    );
-  }
-}
-
-
-class MyCurrentLocation extends StatelessWidget {
-  const MyCurrentLocation({super.key});
-
-  void openLocationSearchBox(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Your Location"),
-        content: const TextField(
-          decoration: InputDecoration(hintText: "Search  address..."),
-        ),
-        actions: [
-          //cancel button
-          MaterialButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel')),
-
-          //save button
-          MaterialButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Save')),
-        ],
-      ),
+        );
+      },
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(25.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Deliver Now",
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+  Widget _buildFoodItemCard(Food food) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FoodPage(food: food),
           ),
-          GestureDetector(
-            onTap: () => openLocationSearchBox(context),
-            child: Row(
-              children: [
-                // address
-                Text(
-                  "253 College St., Toronto",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-                // drop down menu
-                const Icon(Icons.keyboard_arrow_down)
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MyDescriptionBox extends StatelessWidget {
-  const MyDescriptionBox({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    // textstyle
-    var myPrimaryTextStyle =
-        TextStyle(color: Theme.of(context).colorScheme.inversePrimary);
-
-    var mySecondaryTextStyle =
-        TextStyle(color: Theme.of(context).colorScheme.primary);
-
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.secondary),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          //delivery fee
-
-          Column(
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
+        child: Padding(
+          padding: EdgeInsets.all(8.w),
+          child: Row(
             children: [
-              Text(
-                '\$1.25',
-                style: myPrimaryTextStyle,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.r),
+                child: Image.asset(
+                  food.imagePath,
+                  width: 80.w,
+                  height: 80.w,
+                  fit: BoxFit.cover,
+                ),
               ),
-              Text(
-                'Delivery Fee',
-                style: mySecondaryTextStyle,
-              )
+              SizedBox(width: 10.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      food.name,
+                      style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      food.description,
+                      style: TextStyle(fontSize: 12.sp, color: Colors.grey[600]),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4.h),
+                    Text(
+                      '\$${food.price.toStringAsFixed(2)}',
+                      style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold, color: Colors.pink),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
-
-          //delivery time
-
-          Column(
-            children: [
-              Text(
-                '25 mins',
-                style: myPrimaryTextStyle,
-              ),
-              Text(
-                'Delivery Time',
-                style: mySecondaryTextStyle,
-              )
-            ],
-          ),
-        ],
+        ),
       ),
-    );
-  }
-}
-
-
-class FoodTile extends StatelessWidget {
-  final Food food;
-  final void Function()? onTap;
-  const FoodTile({
-    super.key,
-    required this.food,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                // text food details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(food.name),
-                      Text(
-                        '\$${food.price}',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        food.description,
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).colorScheme.inversePrimary),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-
-                // food image
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(18),
-                  child: Image.asset(
-                    food.imagePath,
-                    height: 120,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        // divider line
-        Divider(
-          color: Theme.of(context).colorScheme.primary,
-          endIndent: 25,
-          indent: 25,
-        ),
-      ],
-    );
-  }
-}
-
-
-class MyTabBar extends StatelessWidget {
-  final TabController tabController;
-
-  const MyTabBar({
-    super.key,
-    required this.tabController,
-  });
-
-  List<Tab> _buildCategoryTab() {
-    return FoodCategory.values.map((category) {
-      return Tab(
-        text: category.toString().split('.').last,
-      );
-    }).toList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TabBar(controller: tabController, tabs: _buildCategoryTab()),
     );
   }
 }
