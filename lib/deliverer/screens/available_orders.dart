@@ -2,15 +2,15 @@ import 'package:buildspace_s5/deliverer/screens/order_tracking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class AvaialableOrders extends StatefulWidget {
+class AvailableOrders extends StatefulWidget {
   final String location;
-  const AvaialableOrders({super.key, required this.location});
+  const AvailableOrders({super.key, required this.location});
 
   @override
-  State<AvaialableOrders> createState() => _AvaialableOrdersState();
+  State<AvailableOrders> createState() => _AvailableOrdersState();
 }
 
-class _AvaialableOrdersState extends State<AvaialableOrders> {
+class _AvailableOrdersState extends State<AvailableOrders> {
   static const LatLng sourceLocation = LatLng(37.33500926, -122.03272188);
   static const LatLng destination = LatLng(37.33429383, -122.06600055);
   

@@ -7,45 +7,18 @@ import "../../../../../models/cart_item.dart";
 import "../../../../../models/restaurant.dart";
 import "package:provider/provider.dart";
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:buildspace_s5/services/database.dart';
 
 import "package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_quantity_selector.dart";
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
-  Future<void> _addItems(itemList) async {
-
-    List<Map<String, dynamic>> listOfItems= [];
-    for (final item in itemList){
-      listOfItems.add({
-        "name": item.food.name,
-        "price": item.food.price,
-        "quantity": item.quantity
-      });
-    }
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      final uid = user?.uid;
-
-      // Create a new item document in the restaurant's items subcollection
-      await FirebaseFirestore.instance.collection('Order Queue').add({
-        'itemList': listOfItems,
-        'timestamp': Timestamp.now(),  // Optional: Add a timestamp for order
-        'user_id': uid
-      });
-    } catch (e) {
-      print('Error adding items to Firestore: $e');
-      // Optionally, you can show a snackbar or dialog to inform the user of the error
-    }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Consumer<Restaurant>(builder: (context, restaurant, child) {
       // cart
-
       final userCart = restaurant.cart;
 
       // scaffold UI
@@ -119,9 +92,7 @@ class CartPage extends StatelessWidget {
                       const LatLng(43.664191714479635, -79.39623146137073);
                   LatLng destination =
                       const LatLng(43.668910354936365, -79.39777641370725);
-                  await _addItems(userCart);
-
-
+                  await await DatabaseService().addItems(userCart);
                   Navigator.push(
                       context,
                       MaterialPageRoute(

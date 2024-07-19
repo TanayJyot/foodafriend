@@ -27,7 +27,7 @@ class FCM_Service {
 
     if (message.data["type"] == "deliveryRequest") {
       navigatorKey.currentState?.push(MaterialPageRoute(
-          builder: (context) => AvaialableOrders(location: "Your Location")));
+          builder: (context) => AvailableOrders(location: "Your Location")));
       return;
     }
 

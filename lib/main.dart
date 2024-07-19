@@ -1,3 +1,4 @@
+import 'package:buildspace_s5/deliverer/screens/available_orders.dart';
 import 'package:buildspace_s5/models/user.dart';
 import 'package:buildspace_s5/receiver/screens/wrapper.dart';
 import 'package:buildspace_s5/services/auth.dart';
@@ -74,7 +75,8 @@ class MyApp extends StatelessWidget {
         // home: OrderTrackingPage(sourceLocation: sourceLocation, destination: destination),
 
         // Tanay
-        home: const Wrapper(),
+        // home: const Wrapper(),
+        home: const AvailableOrders(location: "Waterloo"),
         // Restaurant
         // home: RestaurantWrapper(),
 
