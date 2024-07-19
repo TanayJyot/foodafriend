@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 import 'package:unicons/unicons.dart';
 import 'package:buildspace_s5/receiver/screens/heropage/dashboard_screen.dart';
 import 'profile_screen.dart'; // Import the profile screen
-import 'package';
+import '';
+
 
 class HeroPage extends StatefulWidget {
   const HeroPage({super.key});
@@ -15,7 +17,7 @@ class HeroPage extends StatefulWidget {
 
 class HeroPageState extends State<HeroPage> {
   late PersistentTabController? _controller;
-  final String userId = 'current_user_uid'; // Replace with actual UID logic
+  final String? userId = FirebaseAuth.instance.currentUser?.uid; // Replace with actual UID logic
 
   @override
   void initState() {
