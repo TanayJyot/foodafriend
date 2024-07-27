@@ -1,145 +1,129 @@
 import "package:buildspace_s5/receiver/screens/order_tracking.dart";
-import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import 'package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_button.dart';
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "../../../../../models/cart_item.dart";
 import "../../../../../models/restaurant.dart";
 import "package:provider/provider.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:buildspace_s5/services/database.dart';
 
 import "package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_quantity_selector.dart";
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
-  Future<void> _addItems(itemList) async {
-
-    List<Map<String, dynamic>> listOfItems= [];
-    for (final item in itemList){
-      listOfItems.add({
-        "name": item.food.name,
-        "price": item.food.price,
-        "quantity": item.quantity
-      });
-    }
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      final uid = user?.uid;
-
-      // Create a new item document in the restaurant's items subcollection
-      await FirebaseFirestore.instance.collection('Order Queue').add({
-        'itemList': listOfItems,
-        'timestamp': Timestamp.now(),  // Optional: Add a timestamp for order
-        'user_id': uid
-      });
-    } catch (e) {
-      print('Error adding items to Firestore: $e');
-      // Optionally, you can show a snackbar or dialog to inform the user of the error
-    }
-  }
-
-
-
   @override
   Widget build(BuildContext context) {
     return Consumer<Restaurant>(builder: (context, restaurant, child) {
-      // cart
-
       final userCart = restaurant.cart;
 
-      // scaffold UI
       return Scaffold(
         appBar: AppBar(
-          title: const Text("Cart"),
-          backgroundColor: Colors.transparent,
-          foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: BackButton(
+            color: Colors.black,
+          ),
+          title: Text(
+            "My Cart",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
+          ),
           actions: [
-            // clear all cart
             IconButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title:
-                        const Text("Are you sure you want to clear the cart?"),
+                    title: Text("Are you sure you want to clear the cart?"),
                     actions: [
-                      // cancel button
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: const Text("Cancel"),
+                        child: Text("Cancel"),
                       ),
-
-                      // yes button
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                           restaurant.clearCart();
                         },
-                        child: const Text("Yes"),
+                        child: Text("Yes"),
                       ),
                     ],
                   ),
                 );
               },
-              icon: const Icon(Icons.delete),
+              icon: Icon(
+                Icons.delete,
+                color: Colors.black,
+              ),
             ),
           ],
         ),
         body: Column(
           children: [
-            // list of cart
             Expanded(
               child: Column(
                 children: [
                   userCart.isEmpty
-                      ? const Expanded(
-                          child: Center(child: Text("Cart is EMPTY ...")))
-                      : Expanded(
-                          child: ListView.builder(
-                            itemCount: userCart.length,
-                            itemBuilder: (context, index) {
-                              // get individual cart item
-                              final cartItem = userCart[index];
-
-                              // return cart tile UI
-                              return MyCartTile(cartItem: cartItem);
-                            },
-                          ),
+                      ? Expanded(
+                    child: Center(
+                      child: Text(
+                        "Your cart is empty.",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[400],
                         ),
+                      ),
+                    ),
+                  )
+                      : Expanded(
+                    child: ListView.builder(
+                      itemCount: userCart.length,
+                      itemBuilder: (context, index) {
+                        final cartItem = userCart[index];
+                        return MyCartTile(cartItem: cartItem);
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
-            // button to checkout
-
-            MyButton(
-                text: "Checkout",
-                onTap: () async {
-                  LatLng sourceLocation =
-                      const LatLng(43.664191714479635, -79.39623146137073);
-                  LatLng destination =
-                      const LatLng(43.668910354936365, -79.39777641370725);
-                  await _addItems(userCart);
-
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => OrderTrackingPage(
-                              sourceLocation: sourceLocation,
-                              destination: destination)));
-                }),
-
-            const SizedBox(
-              height: 25,
-            )
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                height: 60,
+                width: 225,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    LatLng sourceLocation =
+                    const LatLng(43.664191714479635, -79.39623146137073);
+                    LatLng destination =
+                    const LatLng(43.668910354936365, -79.39777641370725);
+                    await DatabaseService().addItems(userCart);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OrderTrackingPage(
+                                sourceLocation: sourceLocation,
+                                destination: destination)));
+                  },
+                  child: Text("Proceed to Checkout"),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.pink,
+                      foregroundColor: Colors.white,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       );
     });
   }
 }
-
 
 class MyCartTile extends StatelessWidget {
   final CartItem cartItem;
@@ -153,65 +137,40 @@ class MyCartTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<Restaurant>(
         builder: (context, restaurant, child) => Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
-                borderRadius: BorderRadius.circular(8),
+          margin: const EdgeInsets.only(left: 16, right: 16, top: 8),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(16),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.asset(
+                  cartItem.food.imagePath,
+                  height: 60,
+                  width: 60,
+                  fit: BoxFit.cover,
+                ),
               ),
-              margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // food image
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            cartItem.food.imagePath,
-                            height: 100,
-                            width: 100,
-                          ),
-                        ),
-
-                        const SizedBox(
-                          width: 10,
-                        ),
-
-                        // name & price
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //food name
-                            Text(
-                              cartItem.food.name,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                            ),
-
-                            // food price
-                            Text('\$${cartItem.food.price}'),
-                          ],
-                        ),
-
-                        const Spacer(),
-
-                        // quantity bar
-                        QuantitySelector(
-                          quantity: cartItem.quantity,
-                          food: cartItem.food,
-                          onIncrement: () {
-                            restaurant.addToCart(cartItem.food);
-                          },
-                          onDecrement: () {
-                            restaurant.removeFromCart(cartItem);
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+              title: Text(
+                cartItem.food.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 14),
               ),
-            ));
+              subtitle: Text("\$" + cartItem.food.price.toString(), style: TextStyle(fontSize: 12)),
+              trailing: QuantitySelector(
+                quantity: cartItem.quantity,
+                food: cartItem.food,
+                onIncrement: () {
+                  restaurant.addToCart(cartItem.food);
+                },
+                onDecrement: () {
+                  restaurant.removeFromCart(cartItem);
+                },
+              ),
+            ),
+          ),
+        ));
   }
 }

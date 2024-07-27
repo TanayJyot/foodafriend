@@ -58,10 +58,10 @@ dependencies:
 #  flutter pub run flutter_launcher_icons
 #set icon for android and ios and if you want than web and windows
 
-flutter_icons:
+flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/ic_logo.png"
+  image_path: "assets/logo.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter

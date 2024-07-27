@@ -216,7 +216,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "You are delivering for User",
+                    "Your Order will be delivered soon!",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                       fontSize: 20,
@@ -235,7 +235,7 @@ class OrderTrackingPageState extends State<OrderTrackingPage> {
                   const SizedBox(
                     height: 15,
                   ),
-                  const Text("Restuarant: Tim Hortons"),
+                  const Text("Restaurant: Tim Hortons"),
                   const SizedBox(
                     height: 10,
                   ),
