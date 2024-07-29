@@ -1,3 +1,4 @@
+import 'package:buildspace_s5/deliverer/screens/available_orders.dart';
 import 'package:buildspace_s5/receiver/screens/heropage/item_screens/restaurant_menu.dart';
 import 'package:buildspace_s5/services/database.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class DashBoardScreen extends StatefulWidget {
 
 class DashBoardScreenState extends State<DashBoardScreen> {
   final AuthService _auth = AuthService();
+  static const IconData shopping_bag_outlined = IconData(0xf37d, fontFamily: 'MaterialIcons');
   late DatabaseService _database;
   List<dynamic> restaurants = [];
 
@@ -94,7 +96,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                           Row(
                             children: [
                               const Text(
-                                "Location",
+                                "Mining Building",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               Padding(
@@ -106,7 +108,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                               ),
                             ],
                           ),
-                          const Text("City")
+                          const Text("Toronto")
                         ],
                       ),
                       const Spacer(),
@@ -127,12 +129,14 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                           height: 30.h,
                           width: 30.w,
                           child: GestureDetector(
-                            onTap: () => _auth.signOut(),
-                            child: const CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiaLO5Z4Ga_OJMvDSNnn2b_UT6iMUvWU2Btg&usqp=CAU",
-                              ),
-                            ),
+                            onTap: () {
+                              Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const AvailableOrders()));
+                            },
+                            child: const Icon(shopping_bag_outlined),
                           ),
                         ),
                       )
@@ -489,7 +493,7 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                                       size: 20.sp,
                                                     )),
                                                 Positioned(
-                                                    bottom: 90.h,
+                                                    bottom: 20.h,
                                                     left: 10.w,
                                                     child: Container(
                                                       child: Column(
@@ -497,43 +501,30 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Text(
-                                                            restaurants[index]
-                                                                ['name'],
-                                                            style: TextStyle(
-                                                                shadows: const [
-                                                                  Shadow(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    blurRadius:
-                                                                        5,
-                                                                  ),
-                                                                ],
-                                                                fontSize: 20.sp,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
                                                           Row(
                                                             children: [
-                                                              const Text(
-                                                                "American Burgers",
+                                                              Text(
+                                                                restaurants[index]
+                                                                    ['name'],
                                                                 style: TextStyle(
-                                                                    shadows: [
-                                                                      Shadow(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        blurRadius:
-                                                                            5,
-                                                                      ),
-                                                                    ],
+                                                                    // shadows: const [
+                                                                    //   Shadow(
+                                                                    //     color: Colors
+                                                                    //         .black,
+                                                                    //     blurRadius:
+                                                                    //         5,
+                                                                    //   ),
+                                                                    // ],
+                                                                    fontSize: 20.sp,
                                                                     color: Colors
-                                                                        .white),
+                                                                        .red,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
                                                               ),
                                                               SizedBox(
-                                                                width: 140.w,
+                                                                width: 200,
+                                                                height: 50,
                                                               ),
                                                               Container(
                                                                 decoration: BoxDecoration(
@@ -555,9 +546,11 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                                                             .white),
                                                                   ),
                                                                 ),
-                                                              )
+                                                              ),
                                                             ],
-                                                          )
+
+                                                          ),
+
                                                         ],
                                                       ),
                                                     )),
@@ -573,72 +566,72 @@ class DashBoardScreenState extends State<DashBoardScreen> {
                                                                   const RestaurantMenu()),
                                                         );
                                                       },
-                                                      child: Container(
-                                                        height: 40.h,
-                                                        width: 310.w,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.r),
-                                                          gradient:
-                                                              const LinearGradient(
-                                                            colors: [
-                                                              Colors.indigo,
-                                                              Colors
-                                                                  .indigoAccent
-                                                            ],
-                                                            begin: Alignment
-                                                                .bottomLeft,
-                                                            end: Alignment
-                                                                .topRight,
-                                                          ),
-                                                        ),
-                                                        child: Row(
-                                                          children: [
-                                                            const Icon(
-                                                              Icons.percent,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                            const Text(
-                                                              "50% OFF up to 100",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 140.w,
-                                                            ),
-                                                            Container(
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors
-                                                                      .indigo,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              10.r)),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(5
-                                                                            .sp),
-                                                                child:
-                                                                    const Text(
-                                                                  "+1",
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            SizedBox(
-                                                              width: 10.w,
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
+                                                      // child: Container(
+                                                      //   height: 40.h,
+                                                      //   width: 310.w,
+                                                      //   decoration:
+                                                      //       BoxDecoration(
+                                                      //     borderRadius:
+                                                      //         BorderRadius
+                                                      //             .circular(
+                                                      //                 10.r),
+                                                      //     gradient:
+                                                      //         const LinearGradient(
+                                                      //       colors: [
+                                                      //         Colors.indigo,
+                                                      //         Colors
+                                                      //             .indigoAccent
+                                                      //       ],
+                                                      //       begin: Alignment
+                                                      //           .bottomLeft,
+                                                      //       end: Alignment
+                                                      //           .topRight,
+                                                      //     ),
+                                                      //   ),
+                                                      //   child: Row(
+                                                      //     children: [
+                                                      //       const Icon(
+                                                      //         Icons.percent,
+                                                      //         color:
+                                                      //             Colors.white,
+                                                      //       ),
+                                                      //       const Text(
+                                                      //         "50% OFF up to 100",
+                                                      //         style: TextStyle(
+                                                      //             color: Colors
+                                                      //                 .white),
+                                                      //       ),
+                                                      //       SizedBox(
+                                                      //         width: 140.w,
+                                                      //       ),
+                                                      //       Container(
+                                                      //         decoration: BoxDecoration(
+                                                      //             color: Colors
+                                                      //                 .indigo,
+                                                      //             borderRadius:
+                                                      //                 BorderRadius
+                                                      //                     .circular(
+                                                      //                         10.r)),
+                                                      //         child: Padding(
+                                                      //           padding:
+                                                      //               EdgeInsets
+                                                      //                   .all(5
+                                                      //                       .sp),
+                                                      //           child:
+                                                      //               const Text(
+                                                      //             "+1",
+                                                      //             style: TextStyle(
+                                                      //                 color: Colors
+                                                      //                     .white),
+                                                      //           ),
+                                                      //         ),
+                                                      //       ),
+                                                      //       SizedBox(
+                                                      //         width: 10.w,
+                                                      //       )
+                                                      //     ],
+                                                      //   ),
+                                                      // ),
                                                     ))
                                               ],
                                             ),

@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-import 'package:unicons/unicons.dart';
 import 'package:buildspace_s5/receiver/screens/heropage/dashboard_screen.dart';
 import 'profile_screen.dart'; // Import the profile screen
-import '';
 
 
 class HeroPage extends StatefulWidget {

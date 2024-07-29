@@ -49,7 +49,7 @@ class _FoodPageState extends State<FoodPage> {
                       shape: BoxShape.circle,
                     ),
                     child: IconButton(
-                      icon: Icon(Icons.arrow_back, color: Colors.pink),
+                      icon: const Icon(Icons.arrow_back, color: Colors.pink),
                       onPressed: () => Navigator.pop(context),
                     ),
                   ),
@@ -99,7 +99,7 @@ class _FoodPageState extends State<FoodPage> {
               ),
             ),
 
-            Spacer(),
+            const Spacer(),
 
             // Add to cart button
             Padding(

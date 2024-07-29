@@ -3,12 +3,14 @@ import 'package:buildspace_s5/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../models/queue_model.dart';
 
 class AvailableOrders extends StatefulWidget {
-  final String location;
-  const AvailableOrders({super.key, required this.location});
+  final String? location;
+  const AvailableOrders({super.key, this.location});
 
   @override
   State<AvailableOrders> createState() => _AvailableOrdersState();
@@ -35,155 +37,196 @@ class _AvailableOrdersState extends State<AvailableOrders> {
     }
   }
 
-
-  Widget orderCard(
-      {required String name,
-      required String item,
-      required String restaurant,
-      required String distance,
-      required String address,
-      required String eta,
-      required String documentId,
-      }) {
-    return Column(
-      children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => OrderTrackingPage(sourceLocation: sourceLocation, destination: destination, name: name, item: item,),
-            ));
-            _deleteOrder(documentId);
-
-          },
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              children: [
-                // text food details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(restaurant),
-                      Text(
-                        '$distance, ETA: $eta',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "$name would like a $item from $restaurant on $address",
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).colorScheme.inversePrimary),
-                      ),
-                    ],
-                  ),
+  Widget orderCard({
+    required String name,
+    required String item,
+    required String restaurant,
+    required String distance,
+    required String address,
+    required String eta,
+    required String documentId,
+  }) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => OrderTrackingPage(sourceLocation: sourceLocation, destination: destination, name: name, item: item,),
+          ));
+          _deleteOrder(documentId);
+        },
+        child: Padding(
+          padding: EdgeInsets.all(15.r),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                restaurant,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(
-                  width: 15,
+              ),
+              SizedBox(height: 5.h),
+              Text(
+                '$distance, ETA: $eta',
+                style: TextStyle(
+                  color: Colors.pink,
+                  fontSize: 14.sp,
                 ),
-
-                // // food image
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(18),
-                //   child: Image.asset(
-                //     "food.imagePath",
-                //     height: 120,
-                //   ),
-                // ),
-              ],
-            ),
+              ),
+              SizedBox(height: 10.h),
+              Text(
+                "$name would like a $item from $restaurant on $address",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14.sp,
+                ),
+              ),
+            ],
           ),
         ),
-
-        // divider line
-        Divider(
-          color: Theme.of(context).colorScheme.primary,
-          endIndent: 25,
-          indent: 25,
-        ),
-      ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context, designSize: const Size(360, 690));
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Available Orders"),
-      ),
-      body: SingleChildScrollView(
+      backgroundColor: Colors.white,
+      body: SafeArea(
         child: Column(
           children: [
+            // Location box and Dashboard button
             Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Text(
-                "Would you like to pick up any of these orders on your way to ${widget.location}?",
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.inversePrimary),
+              padding: EdgeInsets.all(15.r),
+              child: Row(
+                children: [
+                  // Location box
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.r),
+                        border: Border.all(color: Colors.grey[300]!),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(10.r),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              size: 25.sp,
+                              color: Colors.pink,
+                            ),
+                            SizedBox(width: 10.w),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Heading to",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.sp,
+                                    ),
+                                  ),
+                                  Text(
+                                    widget.location ?? "Robarts Library",
+                                    style: TextStyle(
+                                      color: Colors.grey[600],
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            FaIcon(
+                              FontAwesomeIcons.angleDown,
+                              size: 15.sp,
+                              color: Colors.grey[600],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10.w),
+                  // Dashboard button
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop(); // This will take you back to the previous screen (dashboard)
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.r),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.grey[200],
+                      ),
+                      child: Icon(
+                        Icons.restaurant_menu,
+                        size: 24.sp,
+                        color: Colors.pink,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Divider(
-              color: Theme.of(context).colorScheme.primary,
-              endIndent: 25,
-              indent: 25,
+
+            // Available Orders text
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.r, vertical: 10.r),
+              child: Row(
+                children: [
+                  Text(
+                    "Available Orders",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             ),
 
-        FutureBuilder<Iterable<OrderQueue>>(
-        future: _fetchOrderQueue(),
-    builder: (context, snapshot) {
-      if (snapshot.connectionState == ConnectionState.waiting) {
-        return const CircularProgressIndicator();
-      } else if (snapshot.hasError) {
-        return Text('Error: ${snapshot.error}');
-      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-        return const Text('No orders available');
-      } else {
-        return Column(
-          children: snapshot.data!.map((order) {
-            return orderCard(
-              name: order.name ?? "Default",
-              item: order.item ?? "Default",
-              restaurant: "Tim Hortons",
-              // Adjust this as needed
-              distance: "2 km",
-              // Adjust this as needed
-              address: "23 Bloor St",
-              // Adjust this as needed
-              eta: "25 min walk", // Adjust this as needed
-              documentId: order.id ?? "Default",
-            );
-          }).toList(),
-        );
-      }
-      // orderCard(
-      //     name: "Alex",
-      //     item: "Medium White Hot Chocolate",
-      //     restaurant: "Tim Hortons",
-      //     distance: "2 km",
-      //     address: "23 Bloor St",
-      //     eta: "25 min walk"),
-      // orderCard(
-      //     name: "James",
-      //     item: "McChicken",
-      //     restaurant: "McDonalds",
-      //     distance: "1.4 km",
-      //     address: "55 Bloor St",
-      //     eta: "15 min walk"),
-      // orderCard(
-      //     name: "Rob",
-      //     item: "Foot Long Cookie",
-      //     restaurant: "SubWay",
-      //     distance: "0.3 km",
-      //     address: "82 Bloor St",
-      //     eta: "2 min walk"),
-    })],
+            // Order list
+            Expanded(
+              child: FutureBuilder<Iterable<OrderQueue>>(
+                future: _fetchOrderQueue(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator(color: Colors.pink));
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No orders available'));
+                  } else {
+                    return ListView(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      children: snapshot.data!.map((order) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 10.h),
+                          child: orderCard(
+                            name: order.name ?? "Default",
+                            item: order.item ?? "Default",
+                            restaurant: "Burger Corner",
+                            distance: "2 km",
+                            address: "23 Bloor St",
+                            eta: "25 min walk",
+                            documentId: order.id ?? "Default",
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

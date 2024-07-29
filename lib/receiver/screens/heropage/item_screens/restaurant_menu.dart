@@ -57,7 +57,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
                       "Current Location",
                       style: TextStyle(color: Colors.white, fontSize: 14.sp, fontWeight: FontWeight.bold),
                     ),
-                    Icon(Icons.arrow_drop_down, color: Colors.white),
+                    const Icon(Icons.arrow_drop_down, color: Colors.white),
                   ],
                 ),
               ],
@@ -67,14 +67,14 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.shopping_cart, color: Colors.white),
+          icon: const Icon(Icons.shopping_cart, color: Colors.white),
           onPressed: (
               ) {
             // Navigate to cart page
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CartPage(),
+                builder: (context) => const CartPage(),
               ),
             );
           },
@@ -93,7 +93,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
         ),
         child: Row(
           children: [
-            Expanded(
+            const Expanded(
               child: TextField(
                 decoration: InputDecoration(
                   hintText: "Search for dishes",
@@ -103,7 +103,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
               ),
             ),
             IconButton(
-              icon: Icon(Icons.mic, color: Colors.pink),
+              icon: const Icon(Icons.mic, color: Colors.pink),
               onPressed: () {
                 // Implement voice search
               },
@@ -116,7 +116,7 @@ class _RestaurantMenuState extends State<RestaurantMenu> {
 
   Widget _buildCategoryTabs() {
     List<String> categories = ["All", "Popular", "Recommended", "Burgers", "Pizzas", "Desserts"];
-    return Container(
+    return SizedBox(
       height: 40.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

@@ -1,6 +1,5 @@
 import "package:buildspace_s5/receiver/screens/order_tracking.dart";
 import "package:flutter/material.dart";
-import 'package:buildspace_s5/receiver/screens/heropage/item_screens/items_screen_components/my_button.dart';
 import "package:google_maps_flutter/google_maps_flutter.dart";
 import "../../../../../models/cart_item.dart";
 import "../../../../../models/restaurant.dart";
@@ -21,10 +20,10 @@ class CartPage extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
-          leading: BackButton(
+          leading: const BackButton(
             color: Colors.black,
           ),
-          title: Text(
+          title: const Text(
             "My Cart",
             style: TextStyle(
               fontSize: 18,
@@ -38,24 +37,24 @@ class CartPage extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text("Are you sure you want to clear the cart?"),
+                    title: const Text("Are you sure you want to clear the cart?"),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text("Cancel"),
+                        child: const Text("Cancel"),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.pop(context);
                           restaurant.clearCart();
                         },
-                        child: Text("Yes"),
+                        child: const Text("Yes"),
                       ),
                     ],
                   ),
                 );
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.delete,
                 color: Colors.black,
               ),
@@ -93,7 +92,7 @@ class CartPage extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Container(
+              child: SizedBox(
                 height: 60,
                 width: 225,
                 child: ElevatedButton(
@@ -110,11 +109,11 @@ class CartPage extends StatelessWidget {
                                 sourceLocation: sourceLocation,
                                 destination: destination)));
                   },
-                  child: Text("Proceed to Checkout"),
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.pink,
                       foregroundColor: Colors.white,
                   ),
+                  child: const Text("Proceed to Checkout"),
                 ),
               ),
             ),
@@ -156,9 +155,9 @@ class MyCartTile extends StatelessWidget {
                 cartItem.food.name,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14),
               ),
-              subtitle: Text("\$" + cartItem.food.price.toString(), style: TextStyle(fontSize: 12)),
+              subtitle: Text("\$${cartItem.food.price}", style: const TextStyle(fontSize: 12)),
               trailing: QuantitySelector(
                 quantity: cartItem.quantity,
                 food: cartItem.food,
